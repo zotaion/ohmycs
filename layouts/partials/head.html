@@ -1,0 +1,42 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+<title>{{ block "title" . }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
+
+{{ with $.Description | default $.Params.description | default .Site.Params.description }}
+  <meta name="description" content="{{ . }}" />
+{{ end }}
+<meta name="author" content="{{ .Site.Params.author | default .Site.Title }}" />
+
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" />
+<link rel="canonical" href="{{ .Permalink }}" />
+
+{{/* FOUC guard: set data-theme before the stylesheet paints. */}}
+<script>
+  (function () {
+    try {
+      var stored = localStorage.getItem("theme");
+      var theme =
+        stored === "light" || stored === "dark"
+          ? stored
+          : window.matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark";
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (e) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+
+{{ $tokens := resources.Get "css/tokens.css" }}
+{{ $base := resources.Get "css/base.css" }}
+{{ $chrome := resources.Get "css/chrome.css" }}
+{{ $chroma := resources.Get "css/chroma-melange.css" }}
+{{ $css := slice $tokens $base $chrome $chroma | resources.Concat "css/site.css" | minify | fingerprint }}
+<link
+  rel="stylesheet"
+  href="{{ $css.RelPermalink }}"
+  integrity="{{ $css.Data.Integrity }}"
+  crossorigin="anonymous"
+/>

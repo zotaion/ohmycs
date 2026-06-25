@@ -1,0 +1,30 @@
+title: "Dimensionality Reduction & Representation Learning"
+summary: "Compress and visualize high-dimensional data while preserving its important structure."
+defaults:
+  - "Use PCA first for simplicity."
+  - "Use UMAP or t-SNE for visualizing embeddings, clusters, and high-dimensional datasets."
+rows:
+  - rank: 1
+    algorithm: "PCA"
+    best_for: "Compression, visualization, noise reduction"
+    fields: ["Finance", "biology", "image processing", "preprocessing"]
+  - rank: 2
+    algorithm: "t-SNE"
+    best_for: "2D/3D visualization"
+    fields: ["NLP embeddings", "genomics", "exploratory analysis"]
+  - rank: 3
+    algorithm: "UMAP"
+    best_for: "Fast nonlinear visualization/embedding"
+    fields: ["Single-cell biology", "text embeddings", "image embeddings"]
+  - rank: 4
+    algorithm: "LDA: Linear Discriminant Analysis"
+    best_for: "Supervised projection/classification"
+    fields: ["Face recognition", "medical classification"]
+  - rank: 5
+    algorithm: "NMF: Non-negative Matrix Factorization"
+    best_for: "Parts-based decomposition"
+    fields: ["Topic modeling", "image decomposition", "recommender systems"]
+  - rank: 6
+    algorithm: "Autoencoders"
+    best_for: "Learned nonlinear embeddings"
+    fields: ["Anomaly detection", "compression", "denoising"]

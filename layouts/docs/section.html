@@ -1,0 +1,24 @@
+{{/* docs/section.html — a /docs subsection that is a chapter (has chapter_key),
+     or a plain section listing its children. */}}
+{{ define "main" }}
+  {{ if .Params.chapter_key }}
+    {{ partial "chapter-main.html" . }}
+  {{ else }}
+    <article class="prose">
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}<p class="chapter-summary">{{ . }}</p>{{ end }}
+      {{ .Content }}
+
+      {{ if or .Sections .Pages }}
+        <ul>
+          {{ range .Sections.ByWeight }}
+            <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+          {{ end }}
+          {{ range .Pages.ByWeight }}
+            <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+          {{ end }}
+        </ul>
+      {{ end }}
+    </article>
+  {{ end }}
+{{ end }}

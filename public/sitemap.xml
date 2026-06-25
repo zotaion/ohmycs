@@ -1,0 +1,32 @@
+
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>//localhost:1313/docs/01-supervised-learning/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/02-deep-learning/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/03-unsupervised-clustering/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/04-dimensionality-reduction/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/05-recommender-systems/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/06-anomaly-detection/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/07-time-series-forecasting/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/08-reinforcement-learning/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/09-nlp-text-mining/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/10-computer-vision/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/11-graph-network-ml/</loc>
+  </url><url>
+    <loc>//localhost:1313/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/</loc>
+  </url>
+</urlset>

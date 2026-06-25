@@ -1,0 +1,12 @@
+{{ define "main" }}
+  {{ if .Params.chapter_key }}
+    {{ partial "chapter-main.html" . }}
+  {{ else }}
+    <article class="prose">
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}<p class="chapter-summary">{{ . }}</p>{{ end }}
+      {{ .Content }}
+    </article>
+    {{ partial "pager.html" . }}
+  {{ end }}
+{{ end }}

@@ -1,0 +1,50 @@
+{{/* pager.html — prev/next across ordered /docs siblings.
+     Looks for the current page inside the /docs section's flattened
+     chapter list (sections first, then regular pages) ordered by weight. */}}
+{{ $current := . }}
+{{ $docs := .Site.GetPage "/docs" }}
+
+{{ $siblings := slice }}
+{{ with $docs }}
+  {{ range .Sections.ByWeight }}
+    {{ $siblings = $siblings | append . }}
+  {{ end }}
+  {{ range .RegularPages.ByWeight }}
+    {{ $siblings = $siblings | append . }}
+  {{ end }}
+{{ end }}
+
+{{ $idx := -1 }}
+{{ range $i, $s := $siblings }}
+  {{ if eq $s.RelPermalink $current.RelPermalink }}
+    {{ $idx = $i }}
+  {{ end }}
+{{ end }}
+
+{{ if ge $idx 0 }}
+  <nav class="pager" aria-label="Pagination">
+    {{ if gt $idx 0 }}
+      {{ $prev := index $siblings (sub $idx 1) }}
+      <a class="pager__link pager__link--prev" href="{{ $prev.RelPermalink }}">
+        <span class="pager__dir">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          Previous
+        </span>
+        <span class="pager__title">{{ $prev.LinkTitle | default $prev.Title }}</span>
+      </a>
+    {{ else }}
+      <span></span>
+    {{ end }}
+
+    {{ if lt $idx (sub (len $siblings) 1) }}
+      {{ $next := index $siblings (add $idx 1) }}
+      <a class="pager__link pager__link--next" href="{{ $next.RelPermalink }}">
+        <span class="pager__dir">
+          Next
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </span>
+        <span class="pager__title">{{ $next.LinkTitle | default $next.Title }}</span>
+      </a>
+    {{ end }}
+  </nav>
+{{ end }}

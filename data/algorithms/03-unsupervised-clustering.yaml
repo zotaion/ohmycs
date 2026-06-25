@@ -1,0 +1,32 @@
+title: "Unsupervised Learning: Clustering"
+summary: "Group unlabeled data by structure and similarity to discover segments and patterns."
+notes:
+  - text: "scikit-learn's clustering documentation includes common clustering algorithms such as k-Means and related methods, with k-Means framed around minimizing within-cluster variance."
+defaults:
+  - "Start with k-Means for fast general clustering."
+  - "Use HDBSCAN when clusters have arbitrary shapes or you need noise detection."
+rows:
+  - rank: 1
+    algorithm: "k-Means"
+    best_for: "Fast general clustering"
+    fields: ["Customer segmentation", "vector clustering", "compression"]
+  - rank: 2
+    algorithm: "Hierarchical Clustering"
+    best_for: "Cluster trees/dendrograms"
+    fields: ["Biology", "market research", "document grouping"]
+  - rank: 3
+    algorithm: "DBSCAN / HDBSCAN"
+    best_for: "Arbitrary-shaped clusters, noise detection"
+    fields: ["Geospatial data", "anomaly detection", "fraud", "network analysis"]
+  - rank: 4
+    algorithm: "Gaussian Mixture Models"
+    best_for: "Soft probabilistic clusters"
+    fields: ["Finance", "signal processing", "customer behavior"]
+  - rank: 5
+    algorithm: "Spectral Clustering"
+    best_for: "Nonlinear cluster structures"
+    fields: ["Image segmentation", "graph data"]
+  - rank: 6
+    algorithm: "Mean Shift"
+    best_for: "Mode/peak discovery"
+    fields: ["Computer vision", "spatial clustering"]

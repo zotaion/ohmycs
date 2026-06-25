@@ -1,0 +1,70 @@
+{{/* algorithm-table.html — receives the data map from
+     data/algorithms/<chapter_key>.yaml. Renders callouts + the .algo-table. */}}
+{{ with .defaults }}
+  <div class="callout callout--default">
+    <div class="callout__title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M9 11l3 3L22 4"></path>
+        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+      </svg>
+      Best default choices
+    </div>
+    <ul>
+      {{ range . }}<li>{{ . }}</li>{{ end }}
+    </ul>
+  </div>
+{{ end }}
+
+{{ with .notes }}
+  {{ range . }}
+    <div class="callout callout--note">
+      <div class="callout__title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        Note
+      </div>
+      {{ with .text }}<p>{{ . }}</p>{{ end }}
+    </div>
+  {{ end }}
+{{ end }}
+
+{{ with .rows }}
+  <div class="algo-table-wrap">
+    <table class="algo-table">
+      <thead>
+        <tr>
+          <th class="col-rank" scope="col">#</th>
+          <th class="col-algo" scope="col">Algorithm</th>
+          <th class="col-best" scope="col">Best for</th>
+          <th class="col-fields" scope="col">Common fields</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{ range . }}
+          {{ $rank := .rank | default 0 }}
+          {{ $rankClass := "rank-n" }}
+          {{ if eq (int $rank) 1 }}{{ $rankClass = "rank-1" }}{{ end }}
+          {{ if eq (int $rank) 2 }}{{ $rankClass = "rank-2" }}{{ end }}
+          {{ if eq (int $rank) 3 }}{{ $rankClass = "rank-3" }}{{ end }}
+          <tr data-rank="{{ $rank }}">
+            <td class="cell-rank" data-label="Rank">
+              <span class="rank {{ $rankClass }}">{{ $rank }}</span>
+            </td>
+            <td class="cell-algo" data-label="Algorithm">{{ .algorithm }}</td>
+            <td class="cell-best" data-label="Best for">{{ .best_for }}</td>
+            <td class="cell-fields" data-label="Fields">
+              {{ with .fields }}
+                <ul class="chips">
+                  {{ range . }}<li>{{ . }}</li>{{ end }}
+                </ul>
+              {{ end }}
+            </td>
+          </tr>
+        {{ end }}
+      </tbody>
+    </table>
+  </div>
+{{ end }}

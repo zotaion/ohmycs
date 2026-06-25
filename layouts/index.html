@@ -1,0 +1,45 @@
+{{ define "main" }}
+  <section class="cover">
+    <div class="cover__hero">
+      <span class="cover__eyebrow">A practical field guide</span>
+      <h1 class="cover__title">{{ .Site.Title }}</h1>
+      {{ with .Site.Params.description }}
+        <p class="cover__tagline">{{ . }}</p>
+      {{ end }}
+      {{ with .Content }}
+        <div class="prose" style="text-align:left;max-width:680px;margin:2rem auto 0;">
+          {{ . }}
+        </div>
+      {{ end }}
+    </div>
+
+    {{ $docs := .Site.GetPage "/docs" }}
+    {{ with $docs }}
+      {{ with .Sections }}
+      <div class="cover__grid">
+        {{ range .ByWeight }}
+          {{ $icon := .Params.icon | default "" }}
+          <a
+            class="card"
+            data-icon="{{ $icon }}"
+            href="{{ .RelPermalink }}"
+          >
+            <div class="card__head">
+              <span class="card__num">{{ printf "%02d" (int .Weight) }}</span>
+              {{ with $icon }}{{ partial "chapter-icon.html" . }}{{ end }}
+              <span class="card__title">{{ .Title }}</span>
+            </div>
+            {{ with .Params.description }}
+              <p class="card__desc">{{ . }}</p>
+            {{ end }}
+            <span class="card__arrow">
+              Read
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </span>
+          </a>
+        {{ end }}
+      </div>
+      {{ end }}
+    {{ end }}
+  </section>
+{{ end }}

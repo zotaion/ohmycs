@@ -1,0 +1,34 @@
+title: "Reinforcement Learning"
+summary: "Learn decision-making policies by interacting with an environment and maximizing reward."
+defaults:
+  - "Use bandits for online decision optimization."
+  - "Use PPO for many practical RL tasks, and SAC/TD3 for continuous control."
+rows:
+  - rank: 1
+    algorithm: "Q-Learning / Deep Q-Networks"
+    best_for: "Discrete action problems"
+    fields: ["Games", "robotics simulation", "optimization"]
+  - rank: 2
+    algorithm: "Policy Gradient Methods"
+    best_for: "Direct policy optimization"
+    fields: ["Robotics", "control", "games"]
+  - rank: 3
+    algorithm: "Actor-Critic Methods"
+    best_for: "Stable deep RL"
+    fields: ["Robotics", "autonomous systems"]
+  - rank: 4
+    algorithm: "PPO: Proximal Policy Optimization"
+    best_for: "Practical deep RL baseline"
+    fields: ["Games", "robotics", "RLHF-style optimization"]
+  - rank: 5
+    algorithm: "A3C / A2C"
+    best_for: "Parallel RL training"
+    fields: ["Simulation", "games"]
+  - rank: 6
+    algorithm: "DDPG / TD3 / SAC"
+    best_for: "Continuous control"
+    fields: ["Robotics", "autonomous driving", "industrial control"]
+  - rank: 7
+    algorithm: "Multi-Armed Bandits"
+    best_for: "Exploration vs exploitation"
+    fields: ["Ads", "recommendations", "pricing", "clinical trials"]

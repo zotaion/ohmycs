@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+<title>Reinforcement Learning — Oh My Computer Science</title>
+
+
+  <meta name="description" content="Learn decision-making policies by maximizing reward." />
+
+<meta name="author" content="Oh My Computer Science" />
+
+<link rel="icon" href="/favicon.svg" />
+<link rel="canonical" href="//localhost:1313/docs/08-reinforcement-learning/" />
+
+
+<script>
+  (function () {
+    try {
+      var stored = localStorage.getItem("theme");
+      var theme =
+        stored === "light" || stored === "dark"
+          ? stored
+          : window.matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark";
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (e) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+
+
+
+
+
+
+<link
+  rel="stylesheet"
+  href="/css/site.min.5ebdc6564da280f8c2cf195959813400ed83193b4d89aa3db152f55b98dfa08f.css"
+  integrity="sha256-Xr3GVk2igPjCzxlZWYE0AO2DGTtNiao9sVL1W5jfoI8="
+  crossorigin="anonymous"
+/>
+
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="topbar" role="banner">
+  <a class="brand" href="/" aria-label="Oh My Computer Science — home">
+    <svg
+  class="brand__mark"
+  viewBox="0 0 32 32"
+  fill="none"
+  aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <rect x="1" y="1" width="30" height="30" rx="7" fill="var(--bg-sel)" stroke="var(--border-strong)" stroke-width="1"/>
+  <circle cx="11" cy="16" r="3" fill="var(--green)"/>
+  <circle cx="21" cy="9" r="3" fill="var(--magenta)"/>
+  <circle cx="21" cy="23" r="3" fill="var(--blue)"/>
+  <line x1="11" y1="16" x2="21" y2="9" stroke="var(--comment)" stroke-width="1.6"/>
+  <line x1="11" y1="16" x2="21" y2="23" stroke="var(--comment)" stroke-width="1.6"/>
+</svg>
+
+    <span class="brand__word">Oh My <em>Computer Science</em></span>
+  </a>
+
+  <button
+    class="hamburger"
+    id="menu-toggle"
+    type="button"
+    aria-label="Toggle navigation"
+    aria-controls="sidebar"
+    aria-expanded="false"
+  >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+
+  <div class="topbar__search" role="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <circle cx="11" cy="11" r="7"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input
+      type="search"
+      id="search"
+      placeholder="Search the guide…"
+      aria-label="Search"
+      disabled
+    />
+  </div>
+
+  <div class="topbar__actions">
+    <button
+      class="iconbtn"
+      id="theme-toggle"
+      type="button"
+      aria-label="Toggle dark / light theme"
+      title="Toggle theme"
+      aria-pressed="false"
+    >
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+
+    <a
+      class="iconbtn"
+      href="https://example.org/repo"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Repository on GitHub"
+      title="Repository"
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.4-1.27.73-1.56-2.56-.29-5.26-1.28-5.26-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.04 11.04 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"></path>
+      </svg>
+    </a>
+  </div>
+</header>
+
+
+    
+      <div class="layout">
+        
+          <aside class="sidebar" id="sidebar">
+<nav aria-label="Chapters">
+  <a class="sidebar__home" href="/">
+    Oh My Computer Science
+  </a>
+
+  
+  
+
+  
+    <div class="sidebar__heading">Chapters</div>
+    <ul>
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/01-supervised-learning/"
+    class=""
+    
+  >
+    
+      <span class="num">10</span>
+    
+    <span>Supervised Learning: Regression &amp; Classification</span>
+  </a>
+
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/02-deep-learning/"
+    class=""
+    
+  >
+    
+      <span class="num">20</span>
+    
+    <span>Deep Learning</span>
+  </a>
+
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/03-unsupervised-clustering/"
+    class=""
+    
+  >
+    
+      <span class="num">30</span>
+    
+    <span>Unsupervised Learning: Clustering</span>
+  </a>
+
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/04-dimensionality-reduction/"
+    class=""
+    
+  >
+    
+      <span class="num">40</span>
+    
+    <span>Dimensionality Reduction &amp; Representation Learning</span>
+  </a>
+
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/05-recommender-systems/"
+    class=""
+    
+  >
+    
+      <span class="num">50</span>
+    
+    <span>Recommender-System Algorithms</span>
+  </a>
+
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/06-anomaly-detection/"
+    class=""
+    
+  >
+    
+      <span class="num">60</span>
+    
+    <span>Anomaly Detection</span>
+  </a>
+
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/07-time-series-forecasting/"
+    class=""
+    
+  >
+    
+      <span class="num">70</span>
+    
+    <span>Time-Series Forecasting</span>
+  </a>
+
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/08-reinforcement-learning/"
+    class="active"
+    aria-current="page"
+  >
+    
+      <span class="num">80</span>
+    
+    <span>Reinforcement Learning</span>
+  </a>
+
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/09-nlp-text-mining/"
+    class=""
+    
+  >
+    
+      <span class="num">90</span>
+    
+    <span>NLP &amp; Text Mining</span>
+  </a>
+
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/10-computer-vision/"
+    class=""
+    
+  >
+    
+      <span class="num">100</span>
+    
+    <span>Computer Vision</span>
+  </a>
+
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/11-graph-network-ml/"
+    class=""
+    
+  >
+    
+      <span class="num">110</span>
+    
+    <span>Graph &amp; Network ML</span>
+  </a>
+
+  
+</li>
+
+      
+    </ul>
+
+    
+  
+</nav>
+</aside>
+        
+        <main class="content" id="main-content">
+          <div class="content__inner">
+            
+  
+    
+
+
+  
+    
+  
+
+
+<article class="prose">
+  <div class="chapter-meta">
+    <span class="num">80</span>
+    <span>Chapter</span>
+  </div>
+
+  <h1>Reinforcement Learning</h1>
+
+  
+    <p class="chapter-summary">Learn decision-making policies by interacting with an environment and maximizing reward.</p>
+  
+
+  <p>Reinforcement learning trains agents to make sequences of decisions by interacting with an environment and maximizing cumulative reward. The families below range from value-based and policy-gradient methods to bandits for the explore-vs-exploit tradeoff.</p>
+
+
+  
+    
+
+  <div class="callout callout--default">
+    <div class="callout__title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M9 11l3 3L22 4"></path>
+        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+      </svg>
+      Best default choices
+    </div>
+    <ul>
+      <li>Use bandits for online decision optimization.</li><li>Use PPO for many practical RL tasks, and SAC/TD3 for continuous control.</li>
+    </ul>
+  </div>
+
+
+
+
+
+  <div class="algo-table-wrap">
+    <table class="algo-table">
+      <thead>
+        <tr>
+          <th class="col-rank" scope="col">#</th>
+          <th class="col-algo" scope="col">Algorithm</th>
+          <th class="col-best" scope="col">Best for</th>
+          <th class="col-fields" scope="col">Common fields</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+          
+          
+          
+          
+          
+          <tr data-rank="1">
+            <td class="cell-rank" data-label="Rank">
+              <span class="rank rank-1">1</span>
+            </td>
+            <td class="cell-algo" data-label="Algorithm">Q-Learning / Deep Q-Networks</td>
+            <td class="cell-best" data-label="Best for">Discrete action problems</td>
+            <td class="cell-fields" data-label="Fields">
+              
+                <ul class="chips">
+                  <li>Games</li><li>robotics simulation</li><li>optimization</li>
+                </ul>
+              
+            </td>
+          </tr>
+        
+          
+          
+          
+          
+          
+          <tr data-rank="2">
+            <td class="cell-rank" data-label="Rank">
+              <span class="rank rank-2">2</span>
+            </td>
+            <td class="cell-algo" data-label="Algorithm">Policy Gradient Methods</td>
+            <td class="cell-best" data-label="Best for">Direct policy optimization</td>
+            <td class="cell-fields" data-label="Fields">
+              
+                <ul class="chips">
+                  <li>Robotics</li><li>control</li><li>games</li>
+                </ul>
+              
+            </td>
+          </tr>
+        
+          
+          
+          
+          
+          
+          <tr data-rank="3">
+            <td class="cell-rank" data-label="Rank">
+              <span class="rank rank-3">3</span>
+            </td>
+            <td class="cell-algo" data-label="Algorithm">Actor-Critic Methods</td>
+            <td class="cell-best" data-label="Best for">Stable deep RL</td>
+            <td class="cell-fields" data-label="Fields">
+              
+                <ul class="chips">
+                  <li>Robotics</li><li>autonomous systems</li>
+                </ul>
+              
+            </td>
+          </tr>
+        
+          
+          
+          
+          
+          
+          <tr data-rank="4">
+            <td class="cell-rank" data-label="Rank">
+              <span class="rank rank-n">4</span>
+            </td>
+            <td class="cell-algo" data-label="Algorithm">PPO: Proximal Policy Optimization</td>
+            <td class="cell-best" data-label="Best for">Practical deep RL baseline</td>
+            <td class="cell-fields" data-label="Fields">
+              
+                <ul class="chips">
+                  <li>Games</li><li>robotics</li><li>RLHF-style optimization</li>
+                </ul>
+              
+            </td>
+          </tr>
+        
+          
+          
+          
+          
+          
+          <tr data-rank="5">
+            <td class="cell-rank" data-label="Rank">
+              <span class="rank rank-n">5</span>
+            </td>
+            <td class="cell-algo" data-label="Algorithm">A3C / A2C</td>
+            <td class="cell-best" data-label="Best for">Parallel RL training</td>
+            <td class="cell-fields" data-label="Fields">
+              
+                <ul class="chips">
+                  <li>Simulation</li><li>games</li>
+                </ul>
+              
+            </td>
+          </tr>
+        
+          
+          
+          
+          
+          
+          <tr data-rank="6">
+            <td class="cell-rank" data-label="Rank">
+              <span class="rank rank-n">6</span>
+            </td>
+            <td class="cell-algo" data-label="Algorithm">DDPG / TD3 / SAC</td>
+            <td class="cell-best" data-label="Best for">Continuous control</td>
+            <td class="cell-fields" data-label="Fields">
+              
+                <ul class="chips">
+                  <li>Robotics</li><li>autonomous driving</li><li>industrial control</li>
+                </ul>
+              
+            </td>
+          </tr>
+        
+          
+          
+          
+          
+          
+          <tr data-rank="7">
+            <td class="cell-rank" data-label="Rank">
+              <span class="rank rank-n">7</span>
+            </td>
+            <td class="cell-algo" data-label="Algorithm">Multi-Armed Bandits</td>
+            <td class="cell-best" data-label="Best for">Exploration vs exploitation</td>
+            <td class="cell-fields" data-label="Fields">
+              
+                <ul class="chips">
+                  <li>Ads</li><li>recommendations</li><li>pricing</li><li>clinical trials</li>
+                </ul>
+              
+            </td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+
+  
+</article>
+
+
+
+
+
+
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+
+
+  <nav class="pager" aria-label="Pagination">
+    
+      
+      <a class="pager__link pager__link--prev" href="/docs/07-time-series-forecasting/">
+        <span class="pager__dir">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          Previous
+        </span>
+        <span class="pager__title">Time-Series Forecasting</span>
+      </a>
+    
+
+    
+      
+      <a class="pager__link pager__link--next" href="/docs/09-nlp-text-mining/">
+        <span class="pager__dir">
+          Next
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </span>
+        <span class="pager__title">NLP &amp; Text Mining</span>
+      </a>
+    
+  </nav>
+
+
+
+  
+
+          </div>
+        </main>
+        
+          <aside class="toc">
+
+  <div class="toc__title">On this page</div>
+  <nav id="TableOfContents"></nav>
+
+</aside>
+        
+      </div>
+    
+
+    <div class="backdrop" aria-hidden="true"></div>
+
+    
+<footer class="site-footer" role="contentinfo">
+  <div>
+    Built with <a href="https://gohugo.io" rel="noopener">Hugo</a> ·
+    <a href="https://github.com/savq/melange-nvim" rel="noopener">Melange</a> palette
+  </div>
+  <div>
+    © 2026 Oh My Computer Science
+    
+      · <a href="https://example.org/repo" rel="noopener">Source</a>
+    
+  </div>
+</footer>
+
+
+    
+    
+      <script src="/js/theme.min.98de576a1899bc7b79dcfc8304fee4588afe3c4c100cd9f818a3eabb18f170bb.js" integrity="sha256-mN5XahiZvHt53PyDBP7kWIr&#43;PEwQDNn4GKPquxjxcLs=" crossorigin="anonymous" defer></script>
+    
+  </body>
+</html>

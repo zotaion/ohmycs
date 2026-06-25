@@ -1,0 +1,32 @@
+{{/* sidebar.html — chapter tree built from /docs subsections, sorted by weight. */}}
+<nav aria-label="Chapters">
+  <a class="sidebar__home" href="{{ .Site.Home.RelPermalink }}">
+    {{ .Site.Title }}
+  </a>
+
+  {{ $current := . }}
+  {{ $docs := .Site.GetPage "/docs" }}
+
+  {{ with $docs }}
+    <div class="sidebar__heading">Chapters</div>
+    <ul>
+      {{ range .Sections.ByWeight }}
+        {{ partial "sidebar-node.html" (dict "node" . "current" $current) }}
+      {{ end }}
+    </ul>
+
+    {{ with .RegularPages }}
+      <div class="sidebar__heading">Pages</div>
+      <ul>
+        {{ range .ByWeight }}
+          {{ partial "sidebar-node.html" (dict "node" . "current" $current) }}
+        {{ end }}
+      </ul>
+    {{ end }}
+  {{ else }}
+    {{/* fallback: top-level sections if /docs does not exist yet */}}
+    {{ range where .Site.Sections "Section" "ne" "" }}
+      {{ partial "sidebar-node.html" (dict "node" . "current" $current) }}
+    {{ end }}
+  {{ end }}
+</nav>

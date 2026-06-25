@@ -1,0 +1,130 @@
+/* melange-nvim palette as semantic design tokens.
+   Dark is the default (:root + html[data-theme="dark"]).
+   Colors come ONLY from the melange light/dark palettes. */
+
+:root,
+html[data-theme="dark"] {
+  /* melange dark raw palette */
+  --mel-bg: #292522;
+  --mel-float: #34302c;
+  --mel-sel: #403a36;
+  --mel-ui: #867462;
+  --mel-com: #c1a78e;
+  --mel-fg: #ece1d7;
+  --mel-red: #d47766;
+  --mel-yellow: #ebc06d;
+  --mel-green: #85b695;
+  --mel-cyan: #89b3b6;
+  --mel-blue: #a3a9ce;
+  --mel-magenta: #cf9bc2;
+  --mel-deep-red: #7d2a2f;
+  --mel-deep-yellow: #8b7449;
+  --mel-deep-green: #233524;
+  --mel-deep-cyan: #253333;
+  --mel-deep-blue: #273142;
+  --mel-deep-magenta: #422741;
+
+  /* semantic */
+  --bg: var(--mel-bg);
+  --bg-float: var(--mel-float);
+  --bg-sel: var(--mel-sel);
+  --fg: var(--mel-fg);
+  --muted: var(--mel-ui);
+  --comment: var(--mel-com);
+  --text-secondary: var(--mel-com);
+  --link: var(--mel-blue);
+  --link-hover: var(--mel-cyan);
+  --border: color-mix(in srgb, var(--mel-com) 30%, transparent);
+  --border-strong: color-mix(in srgb, var(--mel-com) 55%, transparent);
+  --red: var(--mel-red);
+  --yellow: var(--mel-yellow);
+  --green: var(--mel-green);
+  --cyan: var(--mel-cyan);
+  --blue: var(--mel-blue);
+  --magenta: var(--mel-magenta);
+  --code-bg: var(--mel-float);
+
+  /* callout tints (deep backgrounds from dark palette) */
+  --tint-default: color-mix(in srgb, var(--mel-deep-green) 70%, transparent);
+  --tint-note: color-mix(in srgb, var(--mel-deep-blue) 70%, transparent);
+  --tint-warn: color-mix(in srgb, var(--mel-deep-yellow) 70%, transparent);
+  --tint-danger: color-mix(in srgb, var(--mel-deep-red) 70%, transparent);
+
+  /* rank badge backgrounds */
+  --rank-1-bg: color-mix(in srgb, var(--mel-yellow) 22%, var(--mel-float));
+  --rank-1-fg: var(--mel-yellow);
+  --rank-2-bg: color-mix(in srgb, var(--mel-blue) 22%, var(--mel-float));
+  --rank-2-fg: var(--mel-blue);
+  --rank-3-bg: color-mix(in srgb, var(--mel-cyan) 22%, var(--mel-float));
+  --rank-3-fg: var(--mel-cyan);
+  --rank-n-bg: color-mix(in srgb, var(--mel-ui) 20%, var(--mel-float));
+  --rank-n-fg: var(--mel-com);
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 6px 24px rgba(0, 0, 0, 0.25);
+  --selection: color-mix(in srgb, var(--mel-blue) 35%, transparent);
+
+  --chip-bg: color-mix(in srgb, var(--mel-com) 12%, transparent);
+  --chip-border: color-mix(in srgb, var(--mel-com) 28%, transparent);
+}
+
+html[data-theme="light"] {
+  /* melange light raw palette */
+  --mel-bg: #f1f1f1;
+  --mel-float: #e9e1db;
+  --mel-sel: #d9d3ce;
+  --mel-ui: #a98a78;
+  --mel-com: #7d6658;
+  --mel-fg: #54433a;
+  --mel-red: #bf0021;
+  --mel-yellow: #a06d00;
+  --mel-green: #3a684a;
+  --mel-cyan: #3d6568;
+  --mel-blue: #465aa4;
+  --mel-magenta: #904180;
+  --mel-soft-red: #f1dedf;
+  --mel-soft-yellow: #cca478;
+  --mel-soft-green: #d0e9d1;
+  --mel-soft-cyan: #cde8e7;
+  --mel-soft-blue: #e0e2e8;
+  --mel-soft-magenta: #e8e0e8;
+
+  /* semantic */
+  --bg: var(--mel-bg);
+  --bg-float: var(--mel-float);
+  --bg-sel: var(--mel-sel);
+  --fg: var(--mel-fg);
+  --muted: var(--mel-ui);
+  --comment: var(--mel-com);
+  --text-secondary: var(--mel-com);
+  --link: var(--mel-blue);
+  --link-hover: var(--mel-magenta);
+  --border: color-mix(in srgb, var(--mel-com) 28%, transparent);
+  --border-strong: color-mix(in srgb, var(--mel-com) 50%, transparent);
+  --red: var(--mel-red);
+  --yellow: var(--mel-yellow);
+  --green: var(--mel-green);
+  --cyan: var(--mel-cyan);
+  --blue: var(--mel-blue);
+  --magenta: var(--mel-magenta);
+  --code-bg: var(--mel-float);
+
+  --tint-default: color-mix(in srgb, var(--mel-soft-green) 80%, transparent);
+  --tint-note: color-mix(in srgb, var(--mel-soft-blue) 80%, transparent);
+  --tint-warn: color-mix(in srgb, var(--mel-soft-yellow) 80%, transparent);
+  --tint-danger: color-mix(in srgb, var(--mel-soft-red) 80%, transparent);
+
+  --rank-1-bg: color-mix(in srgb, var(--mel-yellow) 22%, var(--mel-float));
+  --rank-1-fg: var(--mel-yellow);
+  --rank-2-bg: color-mix(in srgb, var(--mel-blue) 20%, var(--mel-float));
+  --rank-2-fg: var(--mel-blue);
+  --rank-3-bg: color-mix(in srgb, var(--mel-cyan) 22%, var(--mel-float));
+  --rank-3-fg: var(--mel-cyan);
+  --rank-n-bg: color-mix(in srgb, var(--mel-ui) 18%, var(--mel-float));
+  --rank-n-fg: var(--mel-com);
+
+  --shadow: 0 1px 2px rgba(84, 67, 58, 0.12), 0 8px 28px rgba(84, 67, 58, 0.12);
+  --selection: color-mix(in srgb, var(--mel-blue) 25%, transparent);
+
+  --chip-bg: color-mix(in srgb, var(--mel-com) 10%, transparent);
+  --chip-border: color-mix(in srgb, var(--mel-com) 25%, transparent);
+}

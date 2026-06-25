@@ -1,0 +1,14 @@
+{{ define "main" }}
+  <section class="notfound prose">
+    <div class="notfound__code">4<span>0</span>4</div>
+    <h1 style="border:none;padding:0;font-size:1.5rem;">Page not found</h1>
+    <p>
+      The page you're looking for doesn't exist or has been moved.
+      Let's get you back on track.
+    </p>
+    <a class="btn" href="{{ .Site.Home.RelPermalink }}">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12l2-2 7-7 7 7 2 2"/><path d="M5 10v10h14V10"/></svg>
+      Back home
+    </a>
+  </section>
+{{ end }}

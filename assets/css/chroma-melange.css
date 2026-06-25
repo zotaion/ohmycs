@@ -1,0 +1,268 @@
+/* chroma-melange.css — syntax highlighting using melange tokens.
+   Works for both themes because every color is a semantic CSS var. */
+
+.chroma {
+  background: var(--code-bg);
+  color: var(--fg);
+}
+
+.chroma .x {
+  color: var(--fg);
+}
+
+.chroma .err {
+  color: var(--red);
+}
+
+.chroma .cl {
+  color: var(--muted);
+}
+
+.chroma .lnlinks {
+  color: var(--comment);
+  text-decoration: none;
+}
+
+.chroma .lnlinks:hover {
+  color: var(--link-hover);
+}
+
+.chroma .lntd {
+  vertical-align: top;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.chroma .lntable {
+  border-spacing: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  width: auto;
+}
+
+.chroma .hl {
+  background: var(--bg-sel);
+  display: block;
+  width: 100%;
+}
+
+/* line numbers */
+.chroma .ln,
+.chroma .lnt {
+  color: var(--muted);
+  user-select: none;
+  padding-right: 0.8ch;
+}
+
+/* keywords */
+.chroma .k {
+  color: var(--magenta);
+  font-weight: 600;
+}
+.chroma .kc {
+  color: var(--magenta);
+}
+.chroma .kd {
+  color: var(--magenta);
+}
+.chroma .kn {
+  color: var(--magenta);
+}
+.chroma .kp {
+  color: var(--magenta);
+}
+.chroma .kr {
+  color: var(--magenta);
+}
+.chroma .kt {
+  color: var(--yellow);
+}
+
+/* names */
+.chroma .n {
+  color: var(--fg);
+}
+.chroma .na {
+  color: var(--yellow);
+}
+.chroma .nb {
+  color: var(--cyan);
+}
+.chroma .nc {
+  color: var(--yellow);
+}
+.chroma .nd {
+  color: var(--cyan);
+}
+.chroma .ne {
+  color: var(--red);
+}
+.chroma .nf {
+  color: var(--blue);
+}
+.chroma .ni {
+  color: var(--muted);
+}
+.chroma .nl {
+  color: var(--cyan);
+}
+.chroma .nn {
+  color: var(--yellow);
+}
+.chroma .no {
+  color: var(--yellow);
+}
+.chroma .nt {
+  color: var(--red);
+}
+.chroma .nv {
+  color: var(--cyan);
+}
+.chroma .nx {
+  color: var(--fg);
+}
+.chroma .bp {
+  color: var(--cyan);
+}
+
+/* strings */
+.chroma .s {
+  color: var(--green);
+}
+.chroma .s1 {
+  color: var(--green);
+}
+.chroma .s2 {
+  color: var(--green);
+}
+.chroma .sa {
+  color: var(--green);
+}
+.chroma .sb {
+  color: var(--green);
+}
+.chroma .sc {
+  color: var(--green);
+}
+.chroma .sd {
+  color: var(--green);
+}
+.chroma .se {
+  color: var(--yellow);
+}
+.chroma .sh {
+  color: var(--green);
+}
+.chroma .si {
+  color: var(--yellow);
+}
+.chroma .sr {
+  color: var(--cyan);
+}
+.chroma .ss {
+  color: var(--green);
+}
+.chroma .sx {
+  color: var(--green);
+}
+
+/* numbers */
+.chroma .m {
+  color: var(--yellow);
+}
+.chroma .mb {
+  color: var(--yellow);
+}
+.chroma .mf {
+  color: var(--yellow);
+}
+.chroma .mh {
+  color: var(--yellow);
+}
+.chroma .mi {
+  color: var(--yellow);
+}
+.chroma .il {
+  color: var(--yellow);
+}
+.chroma .mo {
+  color: var(--yellow);
+}
+
+/* operators / punctuation */
+.chroma .o {
+  color: var(--muted);
+}
+.chroma .ow {
+  color: var(--magenta);
+  font-weight: 600;
+}
+.chroma .p {
+  color: var(--muted);
+}
+
+/* comments */
+.chroma .c {
+  color: var(--comment);
+  font-style: italic;
+}
+.chroma .c1 {
+  color: var(--comment);
+  font-style: italic;
+}
+.chroma .cm {
+  color: var(--comment);
+  font-style: italic;
+}
+.chroma .cs {
+  color: var(--comment);
+  font-style: italic;
+}
+.chroma .cp {
+  color: var(--comment);
+  font-weight: 600;
+}
+
+/* diff / generic */
+.chroma .gd {
+  color: var(--red);
+  background: color-mix(in srgb, var(--red) 12%, transparent);
+}
+.chroma .ge {
+  font-style: italic;
+}
+.chroma .gi {
+  color: var(--green);
+  background: color-mix(in srgb, var(--green) 12%, transparent);
+}
+.chroma .gr {
+  color: var(--red);
+}
+.chroma .gh {
+  color: var(--muted);
+  font-weight: 600;
+}
+.chroma .go {
+  color: var(--comment);
+}
+.chroma .gp {
+  color: var(--muted);
+}
+.chroma .gs {
+  font-weight: 600;
+}
+.chroma .gu {
+  color: var(--magenta);
+  font-weight: 600;
+}
+.chroma .gt {
+  color: var(--red);
+}
+.chroma .gl {
+  text-decoration: underline;
+}
+.chroma .w {
+  color: var(--fg);
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang | default "en" }}">
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    {{ partial "topbar.html" . }}
+
+    {{ if .IsHome }}
+      <main class="layout layout--cover" id="main-content">
+        {{ block "main" . }}{{ end }}
+      </main>
+    {{ else }}
+      <div class="layout">
+        {{ block "sidebar" . }}
+          <aside class="sidebar" id="sidebar">{{ partial "sidebar.html" . }}</aside>
+        {{ end }}
+        <main class="content" id="main-content">
+          <div class="content__inner">
+            {{ block "main" . }}{{ end }}
+          </div>
+        </main>
+        {{ block "toc" . }}
+          <aside class="toc">{{ partial "toc.html" . }}</aside>
+        {{ end }}
+      </div>
+    {{ end }}
+
+    <div class="backdrop" aria-hidden="true"></div>
+
+    {{ partial "footer.html" . }}
+
+    {{ $js := resources.Get "js/theme.js" | minify | fingerprint }}
+    {{ with $js }}
+      <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
+    {{ end }}
+  </body>
+</html>

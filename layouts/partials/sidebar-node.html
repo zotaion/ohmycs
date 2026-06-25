@@ -1,0 +1,25 @@
+{{/* sidebar-node.html — recursive nav entry.
+     Expects dict: { node: <page>, current: <page> } */}}
+{{ $node := .node }}
+{{ $current := .current }}
+
+<li>
+  <a
+    href="{{ $node.RelPermalink }}"
+    class="{{ if or (eq $node.RelPermalink $current.RelPermalink) ($node.IsAncestor $current) }}active{{ end }}"
+    {{ if eq $node.RelPermalink $current.RelPermalink }}aria-current="page"{{ end }}
+  >
+    {{ with $node.Weight }}
+      {{ if ge (int .) 1 }}<span class="num">{{ printf "%02d" (int .) }}</span>{{ end }}
+    {{ end }}
+    <span>{{ $node.LinkTitle | default $node.Title }}</span>
+  </a>
+
+  {{ with $node.Sections }}
+    <ul>
+      {{ range .ByWeight }}
+        {{ partial "sidebar-node.html" (dict "node" . "current" $current) }}
+      {{ end }}
+    </ul>
+  {{ end }}
+</li>

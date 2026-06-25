@@ -1,0 +1,13 @@
+{{/* footer.html */}}
+<footer class="site-footer" role="contentinfo">
+  <div>
+    Built with <a href="https://gohugo.io" rel="noopener">Hugo</a> ·
+    <a href="https://github.com/savq/melange-nvim" rel="noopener">Melange</a> palette
+  </div>
+  <div>
+    © {{ now.Format "2006" }} {{ .Site.Params.author | default .Site.Title }}
+    {{ with .Site.Params.repo }}
+      · <a href="{{ . }}" rel="noopener">Source</a>
+    {{ end }}
+  </div>
+</footer>
