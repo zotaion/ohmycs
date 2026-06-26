@@ -14,7 +14,7 @@ page = ["HTML"]
 [params]
 description = "A practical field guide to machine-learning algorithms."
 author = "Oh My Computer Science"
-repo = "https://example.org/repo"  # TODO: set real repository URL before publishing
+repo = "https://github.com/zotaion/ohmycs" 
 defaultTheme = "auto"
 
 [markup.goldmark.renderer]
@@ -34,3 +34,11 @@ tabWidth = 2
 startLevel = 2
 endLevel = 3
 ordered = false
+
+# Math (KaTeX) — pass $...$ / $$...$$ / \(...\) / \[...\] through Goldmark untouched
+# so KaTeX (loaded in baseof.html) can render them client-side.
+[markup.goldmark.extensions.passthrough]
+enable = true
+[markup.goldmark.extensions.passthrough.delimiters]
+block = [['$$', '$$'], ['\\[', '\\]']]
+inline = [['$', '$'], ['\\(', '\\)']]

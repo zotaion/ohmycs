@@ -1,5 +1,25 @@
-{{/* toc.html — right-rail in-page table of contents. */}}
-{{ with .TableOfContents }}
-  <div class="toc__title">On this page</div>
-  {{ . }}
+{{/* toc.html — right-rail table of contents.
+     Chapter pages: list the chapter's algorithms (links to their pages).
+     Other pages: Hugo's auto heading TOC, rendered only when non-empty. */}}
+{{ if and .Params.chapter_key .IsSection .Pages }}
+  <div class="toc__title">In this chapter</div>
+  <nav class="toc__chapter">
+    <ul>
+      {{ range .Pages.ByWeight }}
+        <li>
+          <a href="{{ .RelPermalink }}">
+            <span class="toc__num">#{{ .Params.rank }}</span>
+            <span class="toc__name">{{ .Title }}</span>
+          </a>
+        </li>
+      {{ end }}
+    </ul>
+  </nav>
+{{ else }}
+  {{ with .TableOfContents }}
+    {{ if strings.Contains . "<li>" }}
+      <div class="toc__title">On this page</div>
+      {{ . }}
+    {{ end }}
+  {{ end }}
 {{ end }}

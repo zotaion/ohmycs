@@ -32,8 +32,9 @@
 {{ $tokens := resources.Get "css/tokens.css" }}
 {{ $base := resources.Get "css/base.css" }}
 {{ $chrome := resources.Get "css/chrome.css" }}
+{{ $search := resources.Get "css/search.css" }}
 {{ $chroma := resources.Get "css/chroma-melange.css" }}
-{{ $css := slice $tokens $base $chrome $chroma | resources.Concat "css/site.css" | minify | fingerprint }}
+{{ $css := slice $tokens $base $chrome $search $chroma | resources.Concat "css/site.css" | minify | fingerprint }}
 <link
   rel="stylesheet"
   href="{{ $css.RelPermalink }}"

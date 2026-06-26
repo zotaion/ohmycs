@@ -1,0 +1,34 @@
+{{/* category-selector.html — pill-tab filter nav for the cover card grid.
+      Receives dict "sections" (the /docs section pages). Renders a <nav> of
+      buttons: an "All" button plus one per unique category in first-seen
+      order, each with a count badge. */}}
+{{ $sections := .sections }}
+
+{{/* Collect unique category values in first-seen order. */}}
+{{ $cats := slice }}
+{{ range $sections }}
+  {{ $c := .Params.category | default "" }}
+  {{ with $c }}
+    {{ if not (in $cats .) }}
+      {{ $cats = $cats | append . }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+<nav class="filters" aria-label="Filter chapters by category">
+  <button type="button" class="filter is-active" data-filter="all" aria-pressed="true">
+    All <span class="filter__count">{{ len $sections }}</span>
+  </button>
+  {{ range $cats }}
+    {{ $cat := . }}
+    {{ $count := 0 }}
+    {{ range $sections }}
+      {{ if eq (.Params.category | default "") $cat }}
+        {{ $count = add $count 1 }}
+      {{ end }}
+    {{ end }}
+    <button type="button" class="filter" data-filter="{{ $cat }}" aria-pressed="false">
+      {{ $cat }} <span class="filter__count">{{ $count }}</span>
+    </button>
+  {{ end }}
+</nav>

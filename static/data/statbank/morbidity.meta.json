@@ -1,0 +1,1 @@
+{"note":"Long morbidity table; 4 domains harmonised to (domain, cause, sex, age_group, indicator, year, value).","fetched_at":"2026-06-26T06:46:49Z","n_rows":3146,"sources":"VCAT of SAN020200rcl + SAN020700rcl + SAN021000rcl + SAN021200rcl","columns":["domain","cause","sex","age_group","indicator","year","value"]}

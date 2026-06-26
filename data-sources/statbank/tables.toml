@@ -1,0 +1,314 @@
+# Discovered PxWeb tables. Paths are the URL segments after /api/v1/ro/ .
+# Data response format = CSV. Queries discovered via `<key> --meta`.
+
+# --- Pipeline reference (unchanged; macro aggregate, kept for plumbing proof) ---
+[environment]
+title = "Environment (MED020050) - pipeline reference"
+path = ["10 Mediul inconjurator", "MED020", "MED020050.px"]
+
+  [[environment.query]]
+  code = "Necesitati"
+  values = ["0"]
+
+  [[environment.query]]
+  code = "Ani"
+  values = ["2023"]
+
+# --- Morbidity (richer than disease x quarter; broadest disease-class table) ---
+[morbidity]
+title = "Population morbidity by main disease class x indicator x person-type x year (SAN020200rcl), 2014-2024"
+path = ["30 Statistica sociala", "08 SAN", "SAN020", "SAN020200rcl.px"]
+# 16 disease classes x 2 indicators x 2 person-types x 11 years = 704 cells.
+
+  [[morbidity.query]]
+  code = "Clase de boli"
+  filter = "all"
+
+  [[morbidity.query]]
+  code = "Indicatori"
+  filter = "all"
+
+  [[morbidity.query]]
+  code = "Persoane cu morbiditati"
+  filter = "all"
+
+  [[morbidity.query]]
+  code = "Ani"
+  filter = "all"
+
+# --- 7 ML-PoC datasets. Granular cross-tabulations. ---
+
+[labour_salary]
+title = "LFS employed population by activity x education x age group x year x sex x environment (MUN120200), 2014-2025"
+path = ["30 Statistica sociala", "03 FM", "03 MUN", "MUN020", "MUN120200.px"]
+# 8 act x 7 educ x 7 age x 12 yr x 3 sex x 3 medii = 42336 cells; 6 feature dims.
+
+  [[labour_salary.query]]
+  code = "Activitati economice"
+  filter = "all"
+
+  [[labour_salary.query]]
+  code = "Nivel de instruire"
+  filter = "all"
+
+  [[labour_salary.query]]
+  code = "Grupe de virsta"
+  filter = "all"
+
+  [[labour_salary.query]]
+  code = "Ani"
+  filter = "all"
+
+  [[labour_salary.query]]
+  code = "Sexe"
+  filter = "all"
+
+  [[labour_salary.query]]
+  code = "Medii"
+  filter = "all"
+
+[prices_cpi]
+title = "CPI by COICOP divisions, 2015=100, monthly 1994-2026 (PRE013200) - long series w/ COICOP detail"
+path = ["40 Statistica economica", "05 PRE", "PRE010", "serii lunare", "PRE013200.px"]
+# 13 COICOP divisions x 33 years x 12 months = 5148 cells; ~396-month univariate series per division.
+
+  [[prices_cpi.query]]
+  code = "Diviziuni de marfuri si servicii, conform clasificatorului COICOP"
+  filter = "all"
+
+  [[prices_cpi.query]]
+  code = "Ani"
+  filter = "all"
+
+  [[prices_cpi.query]]
+  code = "Luni"
+  filter = "all"
+
+[regional_indicators]
+title = "Wages & gross payroll by activity x raion x year x indicator (SAL010510reg), 2015-2024"
+path = ["60 Statistica regionala", "03 FM", "SAL010", "SAL010510reg.px"]
+# 39 raioane x 6 economic activities x 10 years x 2 indicators = 4680 cells; pivots to 12 features per raion-year.
+
+  [[regional_indicators.query]]
+  code = "Raioane/Regiuni"
+  filter = "all"
+
+  [[regional_indicators.query]]
+  code = "Activitati economice"
+  filter = "all"
+
+  [[regional_indicators.query]]
+  code = "Ani"
+  filter = "all"
+
+  [[regional_indicators.query]]
+  code = "Indicatori"
+  filter = "all"
+
+[national_accounts]
+title = "Dynamics of main macroeconomic indicators, 2014-2024 (CNT208100)"
+path = ["40 Statistica economica", "13 CNT", "CNT208", "CNT208100.px"]
+# Macro aggregate (inherently); kept as-is per task spec.
+
+  [[national_accounts.query]]
+  code = "Indicatori"
+  filter = "all"
+
+  [[national_accounts.query]]
+  code = "Ani"
+  filter = "all"
+
+[agriculture_industry]
+title = "Sown area, avg yield, total production by crop x raion x year x indicator (AGR020600reg), 2010-2024 (sliced)"
+path = ["60 Statistica regionala", "16 AGR", "AGR020600reg.px"]
+# 39 raioane x 36 crops x 15 years (sliced) x 3 indicators = 63180 cells (under 80k).
+
+  [[agriculture_industry.query]]
+  code = "Raioane/Regiuni"
+  filter = "all"
+
+  [[agriculture_industry.query]]
+  code = "Culturi agricole"
+  filter = "all"
+
+  [[agriculture_industry.query]]
+  code = "Ani"
+  filter = "item"
+  values = ["2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"]
+
+  [[agriculture_industry.query]]
+  code = "Indicatori"
+  filter = "all"
+
+[trade_country_product]
+title = "Foreign trade with EU countries by NCM chapter x country x year x indicator (EXT010800), 2020-2024 (sliced)"
+path = ["40 Statistica economica", "21 EXT", "EXT010", "serii anuale", "EXT010800.px"]
+# 2 indicators x 117 NCM chapters x 27 EU countries x 5 years (sliced) = 31590 cells.
+
+  [[trade_country_product.query]]
+  code = "Indicatori"
+  filter = "all"
+
+  [[trade_country_product.query]]
+  code = "Sectiuni si capitole conform NCM"
+  filter = "all"
+
+  [[trade_country_product.query]]
+  code = "Tari UE"
+  filter = "all"
+
+  [[trade_country_product.query]]
+  code = "Ani"
+  filter = "item"
+  values = ["2020", "2021", "2022", "2023", "2024"]
+
+[demography]
+title = "Population by raion x age group x year x environment x sex (POP010400rclreg), 2014-2026"
+path = ["60 Statistica regionala", "02 POP", "POP010400rclreg.px"]
+# 39 raioane x 17 age groups x 13 years x 3 medii x 3 sex = 77571 cells (under 80k).
+
+  [[demography.query]]
+  code = "Raioane"
+  filter = "all"
+
+  [[demography.query]]
+  code = "Grupe de varsta"
+  filter = "all"
+
+  [[demography.query]]
+  code = "Ani"
+  filter = "all"
+
+  [[demography.query]]
+  code = "Medii"
+  filter = "all"
+
+  [[demography.query]]
+  code = "Sexe"
+  filter = "all"
+
+# --- Join inputs (PART A regional feature matrix / PART B morbidity stack) ---
+# Added for the raion x year multi-indicator wide matrix and the morbidity
+# concatenation. Fetched/stacked by scripts/build_joins.jl.
+
+[pop_natural_rates]
+title = "Natural movement rates by region/raion x year x indicator (POP020300reg), 2003-2024"
+path = ["60 Statistica regionala", "02 POP", "POP020300reg.px"]
+# 39 raioane x 22 years x 6 indicators = 5148 cells.
+
+  [[pop_natural_rates.query]]
+  code = "Raioane/Regiuni"
+  filter = "all"
+
+  [[pop_natural_rates.query]]
+  code = "Ani"
+  filter = "all"
+
+  [[pop_natural_rates.query]]
+  code = "Indicatori"
+  filter = "all"
+
+[loc_housing]
+title = "Housing stock by region/raion x environment x year x indicator (LOC010100reg), 2005-2024"
+path = ["60 Statistica regionala", "06 LOC", "LOC010100reg.px"]
+# 39 raioane x 3 medii x 20 years x 3 indicators = 7020 cells.
+
+  [[loc_housing.query]]
+  code = "Raioane/Regiuni"
+  filter = "all"
+
+  [[loc_housing.query]]
+  code = "Medii"
+  filter = "all"
+
+  [[loc_housing.query]]
+  code = "Ani"
+  filter = "all"
+
+  [[loc_housing.query]]
+  code = "Indicatori"
+  filter = "all"
+
+[ind_production]
+title = "Industrial output value by region/raion x unit x year (IND020200reg), 2008-2024"
+path = ["60 Statistica regionala", "14 IND", "IND020200reg.px"]
+# 39 raioane x 2 units x 17 years = 1326 cells.
+
+  [[ind_production.query]]
+  code = "Regiuni/Raioane"
+  filter = "all"
+
+  [[ind_production.query]]
+  code = "Unitatea de masura"
+  filter = "all"
+
+  [[ind_production.query]]
+  code = "Ani"
+  filter = "all"
+
+[morb_tb]
+title = "Morbidity through active tuberculosis by age x sex x indicator x year (SAN020700rcl), 2014-2024"
+path = ["30 Statistica sociala", "08 SAN", "SAN020", "SAN020700rcl.px"]
+# 8 age x 3 sex x 2 indicators x 11 years = 528 cells.
+
+  [[morb_tb.query]]
+  code = "Grupe de virsta"
+  filter = "all"
+
+  [[morb_tb.query]]
+  code = "Sexe"
+  filter = "all"
+
+  [[morb_tb.query]]
+  code = "Indicatori"
+  filter = "all"
+
+  [[morb_tb.query]]
+  code = "Ani"
+  filter = "all"
+
+[morb_tumors]
+title = "Morbidity through malignant tumors by localization x sex x indicator x year (SAN021000rcl), 2014-2024"
+path = ["30 Statistica sociala", "08 SAN", "SAN020", "SAN021000rcl.px"]
+# 15 localization x 3 sex x 2 indicators x 11 years = 990 cells.
+
+  [[morb_tumors.query]]
+  code = "Localizari"
+  filter = "all"
+
+  [[morb_tumors.query]]
+  code = "Sexe"
+  filter = "all"
+
+  [[morb_tumors.query]]
+  code = "Indicatori"
+  filter = "all"
+
+  [[morb_tumors.query]]
+  code = "Ani"
+  filter = "all"
+
+[morb_venereal]
+title = "Morbidity through venereal diseases by age x sex x indicator x disease x year (SAN021200rcl), 2014-2024"
+path = ["30 Statistica sociala", "08 SAN", "SAN020", "SAN021200rcl.px"]
+# 7 age x 3 sex x 2 indicators x 2 diseases x 11 years = 924 cells.
+
+  [[morb_venereal.query]]
+  code = "Grupe de virsta"
+  filter = "all"
+
+  [[morb_venereal.query]]
+  code = "Sexe"
+  filter = "all"
+
+  [[morb_venereal.query]]
+  code = "Indicatori"
+  filter = "all"
+
+  [[morb_venereal.query]]
+  code = "Boli"
+  filter = "all"
+
+  [[morb_venereal.query]]
+  code = "Ani"
+  filter = "all"

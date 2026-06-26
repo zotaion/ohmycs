@@ -1,0 +1,1 @@
+{"fetched_at":"2026-06-25T16:06:08Z","source":"https://statbank.statistica.md:443/PxWeb/api/v1/ro/10%20Mediul%20inconjurator/MED020/MED020050.px","query":[{"selection":{"values":["0"],"filter":"item"},"code":"Necesitati"},{"selection":{"values":["2023"],"filter":"item"},"code":"Ani"}],"n_rows":1,"columns":["Necesitati","2023"]}

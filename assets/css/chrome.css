@@ -471,48 +471,6 @@ pre.chroma code {
   margin: 0 auto;
 }
 
-.cover__hero {
-  text-align: center;
-  margin-bottom: clamp(2rem, 5vw, 3.5rem);
-}
-
-.cover__eyebrow {
-  display: inline-block;
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--comment);
-  background: var(--bg-float);
-  border: 1px solid var(--border);
-  padding: 0.3rem 0.8rem;
-  border-radius: 999px;
-  margin-bottom: 1.2rem;
-}
-
-.cover__title {
-  font-size: clamp(2.4rem, 7vw, 4rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  margin-bottom: 0.8rem;
-  background: linear-gradient(
-    135deg,
-    var(--fg),
-    var(--blue),
-    var(--magenta)
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.cover__tagline {
-  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
-  color: var(--comment);
-  max-width: 620px;
-  margin: 0 auto;
-}
-
 .cover__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
@@ -678,4 +636,270 @@ pre.chroma code {
   text-decoration: none;
   background: var(--bg-float);
   border-color: var(--border-strong);
+}
+
+/* ---------- algorithm table: navigable rows ---------- */
+.algo-table tbody tr[data-href] {
+  cursor: pointer;
+}
+
+.algo-table tbody tr[data-href]:hover td {
+  background: var(--bg-sel);
+}
+
+.algo-table tbody tr[data-href]:focus-visible {
+  outline: none;
+}
+
+.algo-table tbody tr[data-href]:focus-visible td {
+  outline: 2px solid var(--blue);
+  outline-offset: -2px;
+}
+
+.algo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--fg);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.algo-link:hover,
+.algo-link:focus-visible {
+  text-decoration: none;
+  color: var(--link);
+  outline: none;
+}
+
+.algo-link:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.algo-link__arrow {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.algo-link:hover .algo-link__arrow,
+.algo-link:focus-visible .algo-link__arrow {
+  color: var(--link);
+  transform: translateX(2px);
+}
+
+/* ---------- sidebar: algorithm children ---------- */
+.sidebar nav ul.sidebar__algos {
+  padding-left: 0.85rem;
+  margin-left: 0.55rem;
+  margin-top: 0.1rem;
+  border-left: 1px solid var(--border);
+}
+
+.sidebar nav ul.sidebar__algos li {
+  margin: 0;
+}
+
+.sidebar nav ul.sidebar__algos a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.22rem 0.6rem;
+  font-size: 0.82rem;
+  color: var(--comment);
+  line-height: 1.35;
+  min-width: 0;
+}
+
+.sidebar nav ul.sidebar__algos a .num {
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  font-weight: 600;
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.sidebar nav ul.sidebar__algos a .sidebar__algo-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.sidebar nav ul.sidebar__algos a:hover {
+  color: var(--fg);
+}
+
+.sidebar nav ul.sidebar__algos a.active {
+  background: color-mix(in srgb, var(--link) 16%, transparent);
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.sidebar nav ul.sidebar__algos a.active .num {
+  color: var(--link);
+}
+
+/* ---------- category filters (phase 2) ---------- */
+
+/* Constrained intro prose under the masthead. */
+.cover__intro {
+  max-width: 680px;
+  margin: 1.5rem auto 2.4rem;
+  text-align: left;
+  font-size: 0.96rem;
+}
+
+/* ---------- category filters ---------- */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1.4rem;
+}
+
+.filter {
+  appearance: none;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--comment);
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.filter:hover {
+  color: var(--fg);
+  border-color: var(--border-strong);
+}
+
+.filter:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.filter:active {
+  transform: translateY(1px);
+}
+
+.filter.is-active,
+.filter[aria-pressed="true"] {
+  background: var(--bg-sel);
+  color: var(--fg);
+  border-color: var(--border-strong);
+}
+
+.filter__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.filter.is-active .filter__count,
+.filter[aria-pressed="true"] .filter__count {
+  background: color-mix(in srgb, var(--fg) 14%, transparent);
+  color: var(--fg);
+}
+
+/* ---------- card hide + empty state ---------- */
+.card.is-hidden {
+  display: none;
+}
+
+.cover__empty {
+  text-align: center;
+  color: var(--comment);
+  font-size: 0.95rem;
+  padding: 2rem 1rem;
+}
+
+/* ---------- responsive filters ---------- */
+@media (max-width: 560px) {
+  .filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+    padding-bottom: 0.4rem;
+    scrollbar-width: thin;
+  }
+  .filter {
+    flex: 0 0 auto;
+  }
+}
+
+
+/* Clickable algorithm table rows — whole row navigates like a sidebar entry. */
+.algo-table tbody tr[data-href] {
+  cursor: pointer;
+}
+.algo-table tbody tr[data-href]:hover,
+.algo-table tbody tr[data-href]:focus-within {
+  background: var(--bg-sel);
+}
+.algo-link__arrow {
+  transition: transform 0.12s ease;
+}
+.algo-table tbody tr[data-href]:hover .algo-link__arrow {
+  transform: translateX(2px);
+}
+
+/* Chapter-page right-rail: algorithm index ("In this chapter"). */
+.toc nav.toc__chapter ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-left: 1px solid var(--border);
+}
+.toc nav.toc__chapter li { margin: 0; }
+.toc nav.toc__chapter a {
+  display: flex;
+  gap: 0.4rem;
+  align-items: baseline;
+  padding: 0.25rem 0.6rem;
+  color: var(--comment);
+  border-left: 2px solid transparent;
+  margin-left: -1px;
+  line-height: 1.35;
+}
+.toc nav.toc__chapter a:hover {
+  color: var(--fg);
+  text-decoration: none;
+  background: var(--bg-sel);
+}
+.toc__num {
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8rem;
+  flex: 0 0 auto;
+}
+/* Embedded Pluto notebook (exported static HTML). */
+.pluto-embed {
+  width: 100%;
+  height: 620px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-float);
 }

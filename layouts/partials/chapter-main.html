@@ -1,13 +1,6 @@
-{{/* chapter-main.html — the chapter body (article + table + pager).
-     Used by chapter.html, docs/single.html, docs/section.html, and the
-     smart _default/single.html fallback. Safe when chapter_key data is absent. */}}
-{{ $data := "" }}
-{{ with .Params.chapter_key }}
-  {{ with (index hugo.Data.algorithms .) }}
-    {{ $data = . }}
-  {{ end }}
-{{ end }}
-
+{{/* chapter-main.html — chapter body (intro + table + pager).
+     Table + callouts now read from the chapter page and its algorithm
+     sub-pages; no more YAML data source. */}}
 <article class="prose">
   <div class="chapter-meta">
     {{ with .Weight }}<span class="num">{{ printf "%02d" (int .) }}</span>{{ end }}
@@ -16,17 +9,11 @@
 
   <h1>{{ .Title }}</h1>
 
-  {{ with $data }}
-    {{ with .summary }}<p class="chapter-summary">{{ . }}</p>{{ end }}
-  {{ else }}
-    {{ with .Description }}<p class="chapter-summary">{{ . }}</p>{{ end }}
-  {{ end }}
+  {{ with .Description }}<p class="chapter-summary">{{ . }}</p>{{ end }}
 
   {{ with .Content }}{{ . }}{{ end }}
 
-  {{ with $data }}
-    {{ partial "algorithm-table.html" . }}
-  {{ end }}
+  {{ partial "algorithm-table.html" . }}
 </article>
 
 {{ partial "pager.html" . }}

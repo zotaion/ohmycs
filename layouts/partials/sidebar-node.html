@@ -22,4 +22,21 @@
       {{ end }}
     </ul>
   {{ end }}
+
+  {{ with $node.Pages.ByWeight }}
+    <ul class="sidebar__algos">
+      {{ range . }}
+        <li>
+          <a
+            href="{{ .RelPermalink }}"
+            class="{{ if eq .RelPermalink $current.RelPermalink }}active{{ end }}"
+            {{ if eq .RelPermalink $current.RelPermalink }}aria-current="page"{{ end }}
+          >
+            <span class="num">#{{ .Params.rank }}</span>
+            <span class="sidebar__algo-name">{{ .Title }}</span>
+          </a>
+        </li>
+      {{ end }}
+    </ul>
+  {{ end }}
 </li>

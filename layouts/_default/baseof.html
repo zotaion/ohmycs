@@ -2,6 +2,7 @@
 <html lang="{{ .Site.Language.Lang | default "en" }}">
   <head>
     {{ partial "head.html" . }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -17,7 +18,7 @@
           <aside class="sidebar" id="sidebar">{{ partial "sidebar.html" . }}</aside>
         {{ end }}
         <main class="content" id="main-content">
-          <div class="content__inner">
+          <div class="content__inner" data-pagefind-body>
             {{ block "main" . }}{{ end }}
           </div>
         </main>
@@ -35,5 +36,15 @@
     {{ with $js }}
       <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
     {{ end }}
+
+    {{ $searchJS := resources.Get "js/search.js" | minify | fingerprint }}
+    {{ with $searchJS }}
+      <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
+    {{ end }}
+    {{/* KaTeX: render math (loaded from CDN; auto-render finds $...$ and $$...$$). */}}
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+            crossorigin="anonymous"
+            onload="renderMathInElement(document.body, {delimiters:[{left:&quot;$$&quot;,right:&quot;$$&quot;,display:true},{left:&quot;$&quot;,right:&quot;$&quot;,display:false},{left:&quot;\\(&quot;,right:&quot;\\)&quot;,display:false},{left:&quot;\\[&quot;,right:&quot;\\]&quot;,display:true}],throwOnError:false});"></script>
   </body>
 </html>

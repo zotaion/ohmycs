@@ -1,27 +1,23 @@
 {{ define "main" }}
   <section class="cover">
-    <div class="cover__hero">
-      <span class="cover__eyebrow">A practical field guide</span>
-      <h1 class="cover__title">{{ .Site.Title }}</h1>
-      {{ with .Site.Params.description }}
-        <p class="cover__tagline">{{ . }}</p>
-      {{ end }}
-      {{ with .Content }}
-        <div class="prose" style="text-align:left;max-width:680px;margin:2rem auto 0;">
-          {{ . }}
-        </div>
-      {{ end }}
-    </div>
+    {{ with .Content }}
+      <div class="prose cover__intro">
+        {{ . }}
+      </div>
+    {{ end }}
 
     {{ $docs := .Site.GetPage "/docs" }}
     {{ with $docs }}
-      {{ with .Sections }}
+      {{ $sections := .Sections.ByWeight }}
+      {{ partial "category-selector.html" (dict "sections" $sections) }}
       <div class="cover__grid">
-        {{ range .ByWeight }}
+        {{ range $sections }}
           {{ $icon := .Params.icon | default "" }}
+          {{ $category := .Params.category | default "" }}
           <a
             class="card"
             data-icon="{{ $icon }}"
+            data-category="{{ $category }}"
             href="{{ .RelPermalink }}"
           >
             <div class="card__head">
@@ -39,7 +35,6 @@
           </a>
         {{ end }}
       </div>
-      {{ end }}
     {{ end }}
   </section>
 {{ end }}

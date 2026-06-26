@@ -1,0 +1,36 @@
+{{/* algorithm/single.html — layout for generated algorithm pages.
+     Pages carry front matter: type: "algorithm", rank, chapter (permalink),
+     chapter_title, icon, optional aliases, plus the markdown body produced
+     by scripts/gen-algorithms.mjs. */}}
+{{ define "main" }}
+  {{ $rank := .Params.rank | default 0 }}
+  {{ $rankClass := "rank-n" }}
+  {{ if eq (int $rank) 1 }}{{ $rankClass = "rank-1" }}{{ end }}
+  {{ if eq (int $rank) 2 }}{{ $rankClass = "rank-2" }}{{ end }}
+  {{ if eq (int $rank) 3 }}{{ $rankClass = "rank-3" }}{{ end }}
+
+  <article class="prose">
+    <div class="chapter-meta">
+      {{ with .Params.chapter }}
+        <a class="chapter-meta__back" href="{{ . }}#algorithms">
+          {{ with $.Params.chapter_title }}<span>{{ . }}</span>{{ end }}
+        </a>
+      {{ end }}
+      <span class="rank {{ $rankClass }}">#{{ $rank }}</span>
+    </div>
+
+    <h1>{{ .Title }}</h1>
+
+    {{ with .Params.alt_names }}
+      <div>
+        <ul class="chips">
+          {{ range . }}<li>{{ . }}</li>{{ end }}
+        </ul>
+      </div>
+    {{ end }}
+
+    {{ .Content }}
+  </article>
+
+  {{ partial "algo-pager.html" . }}
+{{ end }}

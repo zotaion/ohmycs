@@ -1,0 +1,80 @@
+/* search.css — Pagefind results dropdown for the topbar search.
+   Reuses melange tokens only; no new colors. */
+
+.topbar__search {
+  position: relative;
+}
+
+.search-results {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 420px;
+  max-height: min(60vh, 460px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--bg-float);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  z-index: 60;
+  padding: 4px;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.search-result {
+  display: block;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--fg);
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.search-result:last-child {
+  border-bottom: none;
+}
+
+.search-result:hover,
+.search-result[aria-selected="true"] {
+  background: var(--bg-sel);
+}
+
+.search-result__title {
+  display: block;
+  color: var(--fg);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-result__excerpt {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.search-result__excerpt mark {
+  background: color-mix(in srgb, var(--yellow) 30%, transparent);
+  color: inherit;
+  padding: 0 1px;
+  border-radius: 2px;
+}
+
+.search-results__empty {
+  padding: 14px 10px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}

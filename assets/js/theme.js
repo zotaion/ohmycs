@@ -141,3 +141,139 @@
     }
   });
 })();
+
+// ------------------------------------------------------------------
+// Cover page: category filter pills
+// Self-contained; only runs when the .filters nav is present.
+// ------------------------------------------------------------------
+(function () {
+  "use strict";
+
+  var filters = document.querySelector(".filters");
+  if (!filters) return;
+
+  var buttons = Array.prototype.slice.call(
+    filters.querySelectorAll(".filter")
+  );
+  var cards = Array.prototype.slice.call(
+    document.querySelectorAll(".cover__grid .card")
+  );
+  var grid = document.querySelector(".cover__grid");
+
+  function applyFilter(value) {
+    var visible = 0;
+    cards.forEach(function (card) {
+      var cat = card.getAttribute("data-category") || "";
+      var show = value === "all" || cat === value;
+      card.classList.toggle("is-hidden", !show);
+      if (show) visible++;
+    });
+    toggleEmpty(visible === 0);
+    syncUrl(value);
+  }
+
+  function setActive(value) {
+    var matched = false;
+    buttons.forEach(function (btn) {
+      var isActive = btn.getAttribute("data-filter") === value;
+      btn.setAttribute("aria-pressed", String(isActive));
+      btn.classList.toggle("is-active", isActive);
+      if (isActive) matched = true;
+    });
+    if (!matched) {
+      var allBtn = filters.querySelector('.filter[data-filter="all"]');
+      if (allBtn) {
+        allBtn.setAttribute("aria-pressed", "true");
+        allBtn.classList.add("is-active");
+      }
+      value = "all";
+    }
+    applyFilter(value);
+  }
+
+  function toggleEmpty(empty) {
+    var existing = grid.parentNode.querySelector(".cover__empty");
+    if (!empty) {
+      if (existing) existing.parentNode.removeChild(existing);
+      return;
+    }
+    if (existing) return;
+    var node = document.createElement("p");
+    node.className = "cover__empty";
+    node.textContent = "No chapters in this category.";
+    grid.parentNode.insertBefore(node, grid.nextSibling);
+  }
+
+  function syncUrl(value) {
+    if (!window.history || !window.history.replaceState) return;
+    var url;
+    try {
+      url = new URL(window.location.href);
+    } catch (e) {
+      return;
+    }
+    if (value && value !== "all") {
+      url.searchParams.set("cat", value);
+    } else {
+      url.searchParams.delete("cat");
+    }
+    window.history.replaceState(null, "", url.toString());
+  }
+
+  function currentCatFromUrl() {
+    try {
+      var url = new URL(window.location.href);
+      return url.searchParams.get("cat") || "";
+    } catch (e) {
+      return "";
+    }
+  }
+
+  // Click handling via event delegation.
+  filters.addEventListener("click", function (e) {
+    var btn = e.target.closest(".filter");
+    if (!btn || !filters.contains(btn)) return;
+    setActive(btn.getAttribute("data-filter"));
+  });
+
+  // Keyboard: Left/Right arrows move focus between filter buttons
+  // (aria toolbar pattern). Enter/Space work natively on <button>.
+  filters.addEventListener("keydown", function (e) {
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    var idx = buttons.indexOf(document.activeElement);
+    if (idx === -1) return;
+    e.preventDefault();
+    var next =
+      e.key === "ArrowRight"
+        ? (idx + 1) % buttons.length
+        : (idx - 1 + buttons.length) % buttons.length;
+    buttons[next].focus();
+  });
+
+  // Restore state from ?cat= on load.
+  var initial = currentCatFromUrl();
+  if (initial) {
+    setActive(initial);
+  }
+})();
+
+// Clickable algorithm table rows — clicking anywhere on a row navigates to
+// that algorithm's page (data-href on <tr>). The inner <a class="algo-link">
+// stays as the keyboard-accessible target.
+(function () {
+  "use strict";
+  var table = document.querySelector(".algo-table");
+  if (!table) return;
+  table.addEventListener("click", function (e) {
+    if (e.target.closest("a")) return;          // inner anchor handles itself
+    var tr = e.target.closest("tr[data-href]");
+    if (!tr) return;
+    var href = tr.getAttribute("data-href");
+    if (!href) return;
+    if (e.metaKey || e.ctrlKey) {                // open in new tab
+      window.open(href, "_blank", "noopener");
+    } else {
+      window.location.href = href;
+    }
+  });
+})();

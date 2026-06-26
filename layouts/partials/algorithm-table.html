@@ -1,21 +1,15 @@
-{{/* algorithm-table.html — receives the data map from
-     data/algorithms/<chapter_key>.yaml. Renders callouts + the .algo-table. */}}
-{{ with .defaults }}
+{{/* algorithm-table.html — receives the chapter page. Renders defaults/notes
+     callouts (from chapter front matter) + the ranked algorithm table built
+     from the chapter's algorithm pages (.Pages.ByWeight). */}}
+{{ with .Params.defaults }}
   <div class="callout callout--default">
-    <div class="callout__title">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <path d="M9 11l3 3L22 4"></path>
-        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-      </svg>
-      Best default choices
-    </div>
     <ul>
       {{ range . }}<li>{{ . }}</li>{{ end }}
     </ul>
   </div>
 {{ end }}
 
-{{ with .notes }}
+{{ with .Params.notes }}
   {{ range . }}
     <div class="callout callout--note">
       <div class="callout__title">
@@ -31,8 +25,8 @@
   {{ end }}
 {{ end }}
 
-{{ with .rows }}
-  <div class="algo-table-wrap">
+{{ with .Pages.ByWeight }}
+  <div class="algo-table-wrap" id="algorithms">
     <table class="algo-table">
       <thead>
         <tr>
@@ -44,19 +38,24 @@
       </thead>
       <tbody>
         {{ range . }}
-          {{ $rank := .rank | default 0 }}
+          {{ $rank := .Params.rank | default 0 }}
           {{ $rankClass := "rank-n" }}
           {{ if eq (int $rank) 1 }}{{ $rankClass = "rank-1" }}{{ end }}
           {{ if eq (int $rank) 2 }}{{ $rankClass = "rank-2" }}{{ end }}
           {{ if eq (int $rank) 3 }}{{ $rankClass = "rank-3" }}{{ end }}
-          <tr data-rank="{{ $rank }}">
+          <tr data-rank="{{ $rank }}" data-href="{{ .RelPermalink }}">
             <td class="cell-rank" data-label="Rank">
               <span class="rank {{ $rankClass }}">{{ $rank }}</span>
             </td>
-            <td class="cell-algo" data-label="Algorithm">{{ .algorithm }}</td>
-            <td class="cell-best" data-label="Best for">{{ .best_for }}</td>
+            <td class="cell-algo" data-label="Algorithm">
+              <a class="algo-link" href="{{ .RelPermalink }}">
+                <span class="algo-link__name">{{ .Title }}</span>
+                <span class="algo-link__arrow" aria-hidden="true">→</span>
+              </a>
+            </td>
+            <td class="cell-best" data-label="Best for">{{ .Params.best_for | default "" }}</td>
             <td class="cell-fields" data-label="Fields">
-              {{ with .fields }}
+              {{ with .Params.fields }}
                 <ul class="chips">
                   {{ range . }}<li>{{ . }}</li>{{ end }}
                 </ul>

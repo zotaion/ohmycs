@@ -27,10 +27,15 @@
     <input
       type="search"
       id="search"
+      role="combobox"
+      aria-autocomplete="list"
       placeholder="Search the guide…"
       aria-label="Search"
-      disabled
+      aria-controls="search-results"
+      aria-expanded="false"
+      autocomplete="off"
     />
+    <div class="search-results" id="search-results" role="listbox" aria-label="Search results" hidden></div>
   </div>
 
   <div class="topbar__actions">
