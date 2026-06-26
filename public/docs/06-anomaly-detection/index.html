@@ -1,118 +1,1693 @@
-<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Anomaly Detection — Oh My Computer Science</title><meta name=description content="Flag rare, suspicious, or faulty observations that deviate from the norm."><meta name=author content="Oh My Computer Science"><link rel=icon href=/favicon.svg><link rel=canonical href=/docs/06-anomaly-detection/><script>(function(){try{var e=localStorage.getItem("theme"),t=e==="light"||e==="dark"?e:window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.setAttribute("data-theme",t)}catch{document.documentElement.setAttribute("data-theme","dark")}})()</script><link rel=stylesheet href=/css/site.min.ea6a6eb8914e1ae3e5dc2c0d190db389ebfd8ed0e7822f1b03f5a13127153f62.css integrity="sha256-6mpuuJFOGuPl3CwNGQ2ziev9jtDngi8bA/WhMScVP2I=" crossorigin=anonymous><link rel=stylesheet href=/css/view-transition.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css crossorigin=anonymous></head><body><a class=skip-link href=#main-content>Skip to content</a><header class=topbar role=banner><a class=brand href=/ aria-label="Oh My Computer Science — home"><svg class="brand__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="7" fill="var(--bg-sel)" stroke="var(--border-strong)" stroke-width="1"/><circle cx="11" cy="16" r="3" fill="var(--green)"/><circle cx="21" cy="9" r="3" fill="var(--magenta)"/><circle cx="21" cy="23" r="3" fill="var(--blue)"/><line x1="11" y1="16" x2="21" y2="9" stroke="var(--comment)" stroke-width="1.6"/><line x1="11" y1="16" x2="21" y2="23" stroke="var(--comment)" stroke-width="1.6"/></svg>
-<span class=brand__word>Oh My <em>Computer Science</em></span>
-</a><button class=hamburger id=menu-toggle type=button aria-label="Toggle navigation" aria-controls=sidebar aria-expanded=false>
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><div class=topbar__search role=search><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-<input type=search id=search role=combobox aria-autocomplete=list placeholder="Search the guide…" aria-label=Search aria-controls=search-results aria-expanded=false autocomplete=off><div class=search-results id=search-results role=listbox aria-label="Search results" hidden></div></div><div class=topbar__actions><button class=iconbtn id=theme-toggle type=button aria-label="Toggle dark / light theme" title="Toggle theme" aria-pressed=false>
-<svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-<svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-</button>
-<a class=iconbtn href=https://github.com/zotaion/ohmycs target=_blank rel="noopener noreferrer" aria-label="Repository on GitHub" title=Repository><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5A11.5 11.5.0 00.5 12a11.5 11.5.0 007.86 10.92c.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.4-1.27.73-1.56-2.56-.29-5.26-1.28-5.26-5.69.0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05.0.0.97-.31 3.18 1.18a11.04 11.04.0 015.8.0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1.0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5.0 0023.5 12 11.5 11.5.0 0012 .5z"/></svg></a></div></header><div class=layout><aside class=sidebar id=sidebar><nav aria-label=Chapters><a class=sidebar__home href=/>Oh My Computer Science</a><div class=sidebar__heading>Chapters</div><ul><li><a href=/docs/01-supervised-learning/><span class=num>01</span>
-<span>Supervised Learning: Regression & Classification</span></a><ul class=sidebar__algos><li><a href=/docs/01-supervised-learning/gradient-boosted-trees/><span class=num>#1</span>
-<span class=sidebar__algo-name>Gradient Boosted Trees: XGBoost, LightGBM, CatBoost, GBM</span></a></li><li><a href=/docs/01-supervised-learning/random-forest/><span class=num>#2</span>
-<span class=sidebar__algo-name>Random Forest</span></a></li><li><a href=/docs/01-supervised-learning/logistic-regression/><span class=num>#3</span>
-<span class=sidebar__algo-name>Logistic Regression</span></a></li><li><a href=/docs/01-supervised-learning/linear-regression-ridge-lasso-elastic-net/><span class=num>#4</span>
-<span class=sidebar__algo-name>Linear Regression / Ridge / Lasso / Elastic Net</span></a></li><li><a href=/docs/01-supervised-learning/decision-tree/><span class=num>#5</span>
-<span class=sidebar__algo-name>Decision Tree</span></a></li><li><a href=/docs/01-supervised-learning/support-vector-machine-svr/><span class=num>#6</span>
-<span class=sidebar__algo-name>Support Vector Machine / SVR</span></a></li><li><a href=/docs/01-supervised-learning/k-nearest-neighbors/><span class=num>#7</span>
-<span class=sidebar__algo-name>k-Nearest Neighbors</span></a></li><li><a href=/docs/01-supervised-learning/naive-bayes/><span class=num>#8</span>
-<span class=sidebar__algo-name>Naive Bayes</span></a></li><li><a href=/docs/01-supervised-learning/generalized-linear-models/><span class=num>#9</span>
-<span class=sidebar__algo-name>Generalized Linear Models</span></a></li><li><a href=/docs/01-supervised-learning/neural-networks-mlps/><span class=num>#10</span>
-<span class=sidebar__algo-name>Neural Networks / MLPs</span></a></li></ul></li><li><a href=/docs/02-deep-learning/><span class=num>02</span>
-<span>Deep Learning</span></a><ul class=sidebar__algos><li><a href=/docs/02-deep-learning/transformers/><span class=num>#1</span>
-<span class=sidebar__algo-name>Transformers</span></a></li><li><a href=/docs/02-deep-learning/convolutional-neural-networks/><span class=num>#2</span>
-<span class=sidebar__algo-name>Convolutional Neural Networks</span></a></li><li><a href=/docs/02-deep-learning/recurrent-neural-networks-lstm-gru/><span class=num>#3</span>
-<span class=sidebar__algo-name>Recurrent Neural Networks / LSTM / GRU</span></a></li><li><a href=/docs/02-deep-learning/autoencoders/><span class=num>#4</span>
-<span class=sidebar__algo-name>Autoencoders</span></a></li><li><a href=/docs/02-deep-learning/diffusion-models/><span class=num>#5</span>
-<span class=sidebar__algo-name>Diffusion Models</span></a></li><li><a href=/docs/02-deep-learning/graph-neural-networks/><span class=num>#6</span>
-<span class=sidebar__algo-name>Graph Neural Networks</span></a></li><li><a href=/docs/02-deep-learning/siamese-contrastive-networks/><span class=num>#7</span>
-<span class=sidebar__algo-name>Siamese / Contrastive Networks</span></a></li><li><a href=/docs/02-deep-learning/neural-collaborative-filtering/><span class=num>#8</span>
-<span class=sidebar__algo-name>Neural Collaborative Filtering</span></a></li></ul></li><li><a href=/docs/03-unsupervised-clustering/><span class=num>03</span>
-<span>Unsupervised Learning: Clustering</span></a><ul class=sidebar__algos><li><a href=/docs/03-unsupervised-clustering/k-means/><span class=num>#1</span>
-<span class=sidebar__algo-name>k-Means</span></a></li><li><a href=/docs/03-unsupervised-clustering/hierarchical-clustering/><span class=num>#2</span>
-<span class=sidebar__algo-name>Hierarchical Clustering</span></a></li><li><a href=/docs/03-unsupervised-clustering/dbscan-hdbscan/><span class=num>#3</span>
-<span class=sidebar__algo-name>DBSCAN / HDBSCAN</span></a></li><li><a href=/docs/03-unsupervised-clustering/gaussian-mixture-models/><span class=num>#4</span>
-<span class=sidebar__algo-name>Gaussian Mixture Models</span></a></li><li><a href=/docs/03-unsupervised-clustering/spectral-clustering/><span class=num>#5</span>
-<span class=sidebar__algo-name>Spectral Clustering</span></a></li><li><a href=/docs/03-unsupervised-clustering/mean-shift/><span class=num>#6</span>
-<span class=sidebar__algo-name>Mean Shift</span></a></li></ul></li><li><a href=/docs/04-dimensionality-reduction/><span class=num>04</span>
-<span>Dimensionality Reduction & Representation Learning</span></a><ul class=sidebar__algos><li><a href=/docs/04-dimensionality-reduction/pca/><span class=num>#1</span>
-<span class=sidebar__algo-name>PCA</span></a></li><li><a href=/docs/04-dimensionality-reduction/t-sne/><span class=num>#2</span>
-<span class=sidebar__algo-name>t-SNE</span></a></li><li><a href=/docs/04-dimensionality-reduction/umap/><span class=num>#3</span>
-<span class=sidebar__algo-name>UMAP</span></a></li><li><a href=/docs/04-dimensionality-reduction/lda/><span class=num>#4</span>
-<span class=sidebar__algo-name>LDA: Linear Discriminant Analysis</span></a></li><li><a href=/docs/04-dimensionality-reduction/nmf/><span class=num>#5</span>
-<span class=sidebar__algo-name>NMF: Non-negative Matrix Factorization</span></a></li><li><a href=/docs/04-dimensionality-reduction/autoencoders/><span class=num>#6</span>
-<span class=sidebar__algo-name>Autoencoders</span></a></li></ul></li><li><a href=/docs/05-recommender-systems/><span class=num>05</span>
-<span>Recommender-System Algorithms</span></a><ul class=sidebar__algos><li><a href=/docs/05-recommender-systems/collaborative-filtering/><span class=num>#1</span>
-<span class=sidebar__algo-name>Collaborative Filtering</span></a></li><li><a href=/docs/05-recommender-systems/matrix-factorization-svd-als/><span class=num>#2</span>
-<span class=sidebar__algo-name>Matrix Factorization / SVD / ALS</span></a></li><li><a href=/docs/05-recommender-systems/content-based-filtering/><span class=num>#3</span>
-<span class=sidebar__algo-name>Content-Based Filtering</span></a></li><li><a href=/docs/05-recommender-systems/hybrid-recommenders/><span class=num>#4</span>
-<span class=sidebar__algo-name>Hybrid Recommenders</span></a></li><li><a href=/docs/05-recommender-systems/learning-to-rank/><span class=num>#5</span>
-<span class=sidebar__algo-name>Learning-to-Rank</span></a></li><li><a href=/docs/05-recommender-systems/deep-recommenders-two-tower-models/><span class=num>#6</span>
-<span class=sidebar__algo-name>Deep Recommenders / Two-Tower Models</span></a></li><li><a href=/docs/05-recommender-systems/bandit-algorithms/><span class=num>#7</span>
-<span class=sidebar__algo-name>Bandit Algorithms</span></a></li></ul></li><li><a href=/docs/06-anomaly-detection/ class=active aria-current=page><span class=num>06</span>
-<span>Anomaly Detection</span></a><ul class=sidebar__algos><li><a href=/docs/06-anomaly-detection/isolation-forest/><span class=num>#1</span>
-<span class=sidebar__algo-name>Isolation Forest</span></a></li><li><a href=/docs/06-anomaly-detection/one-class-svm/><span class=num>#2</span>
-<span class=sidebar__algo-name>One-Class SVM</span></a></li><li><a href=/docs/06-anomaly-detection/local-outlier-factor/><span class=num>#3</span>
-<span class=sidebar__algo-name>Local Outlier Factor</span></a></li><li><a href=/docs/06-anomaly-detection/autoencoders/><span class=num>#4</span>
-<span class=sidebar__algo-name>Autoencoders</span></a></li><li><a href=/docs/06-anomaly-detection/gaussian-statistical-threshold-models/><span class=num>#5</span>
-<span class=sidebar__algo-name>Gaussian / Statistical Threshold Models</span></a></li><li><a href=/docs/06-anomaly-detection/robust-covariance-elliptic-envelope/><span class=num>#6</span>
-<span class=sidebar__algo-name>Robust Covariance / Elliptic Envelope</span></a></li></ul></li><li><a href=/docs/07-time-series-forecasting/><span class=num>07</span>
-<span>Time-Series Forecasting</span></a><ul class=sidebar__algos><li><a href=/docs/07-time-series-forecasting/arima-sarima/><span class=num>#1</span>
-<span class=sidebar__algo-name>ARIMA / SARIMA</span></a></li><li><a href=/docs/07-time-series-forecasting/exponential-smoothing-ets-holt-winters/><span class=num>#2</span>
-<span class=sidebar__algo-name>Exponential Smoothing / ETS / Holt-Winters</span></a></li><li><a href=/docs/07-time-series-forecasting/prophet-style-additive-models/><span class=num>#3</span>
-<span class=sidebar__algo-name>Prophet-style additive models</span></a></li><li><a href=/docs/07-time-series-forecasting/gradient-boosting-for-time-series/><span class=num>#4</span>
-<span class=sidebar__algo-name>Gradient Boosting for Time Series</span></a></li><li><a href=/docs/07-time-series-forecasting/lstm-gru/><span class=num>#5</span>
-<span class=sidebar__algo-name>LSTM / GRU</span></a></li><li><a href=/docs/07-time-series-forecasting/temporal-cnn-tcn/><span class=num>#6</span>
-<span class=sidebar__algo-name>Temporal CNN / TCN</span></a></li><li><a href=/docs/07-time-series-forecasting/transformer-forecasting-models/><span class=num>#7</span>
-<span class=sidebar__algo-name>Transformer Forecasting Models</span></a></li><li><a href=/docs/07-time-series-forecasting/state-space-models-kalman-filter/><span class=num>#8</span>
-<span class=sidebar__algo-name>State Space Models / Kalman Filter</span></a></li></ul></li><li><a href=/docs/08-reinforcement-learning/><span class=num>08</span>
-<span>Reinforcement Learning</span></a><ul class=sidebar__algos><li><a href=/docs/08-reinforcement-learning/q-learning-deep-q-networks/><span class=num>#1</span>
-<span class=sidebar__algo-name>Q-Learning / Deep Q-Networks</span></a></li><li><a href=/docs/08-reinforcement-learning/policy-gradient-methods/><span class=num>#2</span>
-<span class=sidebar__algo-name>Policy Gradient Methods</span></a></li><li><a href=/docs/08-reinforcement-learning/actor-critic-methods/><span class=num>#3</span>
-<span class=sidebar__algo-name>Actor-Critic Methods</span></a></li><li><a href=/docs/08-reinforcement-learning/ppo/><span class=num>#4</span>
-<span class=sidebar__algo-name>PPO: Proximal Policy Optimization</span></a></li><li><a href=/docs/08-reinforcement-learning/a3c-a2c/><span class=num>#5</span>
-<span class=sidebar__algo-name>A3C / A2C</span></a></li><li><a href=/docs/08-reinforcement-learning/ddpg-td3-sac/><span class=num>#6</span>
-<span class=sidebar__algo-name>DDPG / TD3 / SAC</span></a></li><li><a href=/docs/08-reinforcement-learning/multi-armed-bandits/><span class=num>#7</span>
-<span class=sidebar__algo-name>Multi-Armed Bandits</span></a></li></ul></li><li><a href=/docs/09-nlp-text-mining/><span class=num>09</span>
-<span>NLP & Text Mining</span></a><ul class=sidebar__algos><li><a href=/docs/09-nlp-text-mining/transformer-models-llms/><span class=num>#1</span>
-<span class=sidebar__algo-name>Transformer Models / LLMs</span></a></li><li><a href=/docs/09-nlp-text-mining/embeddings-vector-search/><span class=num>#2</span>
-<span class=sidebar__algo-name>Embeddings + Vector Search</span></a></li><li><a href=/docs/09-nlp-text-mining/tf-idf-linear-models/><span class=num>#3</span>
-<span class=sidebar__algo-name>TF-IDF + Linear Models</span></a></li><li><a href=/docs/09-nlp-text-mining/naive-bayes/><span class=num>#4</span>
-<span class=sidebar__algo-name>Naive Bayes</span></a></li><li><a href=/docs/09-nlp-text-mining/topic-modeling/><span class=num>#5</span>
-<span class=sidebar__algo-name>Topic Modeling: LDA, NMF</span></a></li><li><a href=/docs/09-nlp-text-mining/crf-hmm/><span class=num>#6</span>
-<span class=sidebar__algo-name>CRF / HMM</span></a></li><li><a href=/docs/09-nlp-text-mining/word2vec-glove-fasttext/><span class=num>#7</span>
-<span class=sidebar__algo-name>Word2Vec / GloVe / FastText</span></a></li></ul></li><li><a href=/docs/10-computer-vision/><span class=num>10</span>
-<span>Computer Vision</span></a><ul class=sidebar__algos><li><a href=/docs/10-computer-vision/cnns/><span class=num>#1</span>
-<span class=sidebar__algo-name>CNNs</span></a></li><li><a href=/docs/10-computer-vision/vision-transformers/><span class=num>#2</span>
-<span class=sidebar__algo-name>Vision Transformers</span></a></li><li><a href=/docs/10-computer-vision/yolo-style-detectors/><span class=num>#3</span>
-<span class=sidebar__algo-name>YOLO-style Detectors</span></a></li><li><a href=/docs/10-computer-vision/r-cnn-faster-r-cnn-mask-r-cnn/><span class=num>#4</span>
-<span class=sidebar__algo-name>R-CNN / Faster R-CNN / Mask R-CNN</span></a></li><li><a href=/docs/10-computer-vision/u-net/><span class=num>#5</span>
-<span class=sidebar__algo-name>U-Net</span></a></li><li><a href=/docs/10-computer-vision/diffusion-models/><span class=num>#6</span>
-<span class=sidebar__algo-name>Diffusion Models</span></a></li><li><a href=/docs/10-computer-vision/classical-cv-ml/><span class=num>#7</span>
-<span class=sidebar__algo-name>Classical CV + ML: SIFT, HOG, SVM</span></a></li></ul></li><li><a href=/docs/11-graph-network-ml/><span class=num>11</span>
-<span>Graph & Network ML</span></a><ul class=sidebar__algos><li><a href=/docs/11-graph-network-ml/pagerank/><span class=num>#1</span>
-<span class=sidebar__algo-name>PageRank</span></a></li><li><a href=/docs/11-graph-network-ml/community-detection/><span class=num>#2</span>
-<span class=sidebar__algo-name>Community Detection: Louvain, Leiden</span></a></li><li><a href=/docs/11-graph-network-ml/node2vec-deepwalk/><span class=num>#3</span>
-<span class=sidebar__algo-name>Node2Vec / DeepWalk</span></a></li><li><a href=/docs/11-graph-network-ml/graph-neural-networks/><span class=num>#4</span>
-<span class=sidebar__algo-name>Graph Neural Networks</span></a></li><li><a href=/docs/11-graph-network-ml/graphsage-gcn-gat/><span class=num>#5</span>
-<span class=sidebar__algo-name>GraphSAGE / GCN / GAT</span></a></li><li><a href=/docs/11-graph-network-ml/link-prediction-models/><span class=num>#6</span>
-<span class=sidebar__algo-name>Link Prediction Models</span></a></li></ul></li></ul></nav></aside><main class=content id=main-content><div class=content__inner data-pagefind-body><article class=prose><div class=chapter-meta><span class=num>06</span>
-<span>Chapter</span></div><h1>Anomaly Detection</h1><p class=chapter-summary>Flag rare, suspicious, or faulty observations that deviate from the norm.</p><p>Anomaly detection flags the rare, suspicious, or faulty observations that deviate from expected patterns. The methods below range from tree-based and density approaches to statistical thresholds and neural detectors for complex high-dimensional data.</p><div class="callout callout--default"><ul><li>Use Isolation Forest as a strong general-purpose baseline.</li><li>Use statistical thresholds for simple monitoring; autoencoders for high-dimensional data.</li></ul></div><div class=algo-table-wrap id=algorithms><table class=algo-table><thead><tr><th class=col-rank scope=col>#</th><th class=col-algo scope=col>Algorithm</th><th class=col-best scope=col>Best for</th><th class=col-fields scope=col>Common fields</th></tr></thead><tbody><tr data-rank=1 data-href=/docs/06-anomaly-detection/isolation-forest/><td class=cell-rank data-label=Rank><span class="rank rank-1">1</span></td><td class=cell-algo data-label=Algorithm><a class=algo-link href=/docs/06-anomaly-detection/isolation-forest/><span class=algo-link__name>Isolation Forest</span>
-<span class=algo-link__arrow aria-hidden=true>→</span></a></td><td class=cell-best data-label="Best for">General anomaly detection</td><td class=cell-fields data-label=Fields><ul class=chips><li>Fraud</li><li>cybersecurity</li><li>operations</li><li>IoT</li></ul></td></tr><tr data-rank=2 data-href=/docs/06-anomaly-detection/one-class-svm/><td class=cell-rank data-label=Rank><span class="rank rank-2">2</span></td><td class=cell-algo data-label=Algorithm><a class=algo-link href=/docs/06-anomaly-detection/one-class-svm/><span class=algo-link__name>One-Class SVM</span>
-<span class=algo-link__arrow aria-hidden=true>→</span></a></td><td class=cell-best data-label="Best for">Novelty detection on smaller datasets</td><td class=cell-fields data-label=Fields><ul class=chips><li>Manufacturing</li><li>security</li><li>quality control</li></ul></td></tr><tr data-rank=3 data-href=/docs/06-anomaly-detection/local-outlier-factor/><td class=cell-rank data-label=Rank><span class="rank rank-3">3</span></td><td class=cell-algo data-label=Algorithm><a class=algo-link href=/docs/06-anomaly-detection/local-outlier-factor/><span class=algo-link__name>Local Outlier Factor</span>
-<span class=algo-link__arrow aria-hidden=true>→</span></a></td><td class=cell-best data-label="Best for">Density-based outliers</td><td class=cell-fields data-label=Fields><ul class=chips><li>Sensor data</li><li>geospatial data</li><li>fraud</li></ul></td></tr><tr data-rank=4 data-href=/docs/06-anomaly-detection/autoencoders/><td class=cell-rank data-label=Rank><span class="rank rank-n">4</span></td><td class=cell-algo data-label=Algorithm><a class=algo-link href=/docs/06-anomaly-detection/autoencoders/><span class=algo-link__name>Autoencoders</span>
-<span class=algo-link__arrow aria-hidden=true>→</span></a></td><td class=cell-best data-label="Best for">Complex high-dimensional anomalies</td><td class=cell-fields data-label=Fields><ul class=chips><li>Images</li><li>network traffic</li><li>medical scans</li></ul></td></tr><tr data-rank=5 data-href=/docs/06-anomaly-detection/gaussian-statistical-threshold-models/><td class=cell-rank data-label=Rank><span class="rank rank-n">5</span></td><td class=cell-algo data-label=Algorithm><a class=algo-link href=/docs/06-anomaly-detection/gaussian-statistical-threshold-models/><span class=algo-link__name>Gaussian / Statistical Threshold Models</span>
-<span class=algo-link__arrow aria-hidden=true>→</span></a></td><td class=cell-best data-label="Best for">Simple monitoring</td><td class=cell-fields data-label=Fields><ul class=chips><li>DevOps</li><li>finance</li><li>process control</li></ul></td></tr><tr data-rank=6 data-href=/docs/06-anomaly-detection/robust-covariance-elliptic-envelope/><td class=cell-rank data-label=Rank><span class="rank rank-n">6</span></td><td class=cell-algo data-label=Algorithm><a class=algo-link href=/docs/06-anomaly-detection/robust-covariance-elliptic-envelope/><span class=algo-link__name>Robust Covariance / Elliptic Envelope</span>
-<span class=algo-link__arrow aria-hidden=true>→</span></a></td><td class=cell-best data-label="Best for">Gaussian-like data</td><td class=cell-fields data-label=Fields><ul class=chips><li>Risk modeling</li><li>industrial monitoring</li></ul></td></tr></tbody></table></div></article><nav class=pager aria-label=Pagination><a class="pager__link pager__link--prev" href=/docs/05-recommender-systems/><span class=pager__dir><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-Previous
-</span><span class=pager__title>Recommender-System Algorithms</span>
-</a><a class="pager__link pager__link--next" href=/docs/07-time-series-forecasting/><span class=pager__dir>Next
-<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-</span><span class=pager__title>Time-Series Forecasting</span></a></nav></div></main><aside class=toc><div class=toc__title>In this chapter</div><nav class=toc__chapter><ul><li><a href=/docs/06-anomaly-detection/isolation-forest/><span class=toc__num>#1</span>
-<span class=toc__name>Isolation Forest</span></a></li><li><a href=/docs/06-anomaly-detection/one-class-svm/><span class=toc__num>#2</span>
-<span class=toc__name>One-Class SVM</span></a></li><li><a href=/docs/06-anomaly-detection/local-outlier-factor/><span class=toc__num>#3</span>
-<span class=toc__name>Local Outlier Factor</span></a></li><li><a href=/docs/06-anomaly-detection/autoencoders/><span class=toc__num>#4</span>
-<span class=toc__name>Autoencoders</span></a></li><li><a href=/docs/06-anomaly-detection/gaussian-statistical-threshold-models/><span class=toc__num>#5</span>
-<span class=toc__name>Gaussian / Statistical Threshold Models</span></a></li><li><a href=/docs/06-anomaly-detection/robust-covariance-elliptic-envelope/><span class=toc__num>#6</span>
-<span class=toc__name>Robust Covariance / Elliptic Envelope</span></a></li></ul></nav></aside></div><div class=backdrop aria-hidden=true></div><footer class=site-footer role=contentinfo><div>Built with <a href=https://gohugo.io rel=noopener>Hugo</a> ·
-<a href=https://github.com/savq/melange-nvim rel=noopener>Melange</a> palette</div><div>© 2026 Oh My Computer Science
-· <a href=https://github.com/zotaion/ohmycs rel=noopener>Source</a></div></footer><script src=/js/theme.min.04b9275e3737306705d13f2143c2bff09d701db73e562e5a253541041057a985.js integrity="sha256-BLknXjc3MGcF0T8hQ8K/8J1wHbc+Vi5aJTVBBBBXqYU=" crossorigin=anonymous defer></script><script src=/js/search.min.0ca1bbcb5c6730994770095b258829bb6fbe7df89eadffe82147ed691d29903a.js integrity="sha256-DKG7y1xnMJlHcAlbJYgpu2++ffierf/oIUftaR0pkDo=" crossorigin=anonymous defer></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js crossorigin=anonymous></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js crossorigin=anonymous onload='renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],throwOnError:!1})'></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+<title>Anomaly Detection — Oh My Computer Science</title>
+
+
+  <meta name="description" content="Flag rare, suspicious, or faulty observations that deviate from the norm." />
+
+<meta name="author" content="Oh My Computer Science" />
+
+<link rel="icon" href="/favicon.svg" />
+<link rel="canonical" href="//localhost:1313/docs/06-anomaly-detection/" />
+
+
+<script>
+  (function () {
+    try {
+      var stored = localStorage.getItem("theme");
+      var theme =
+        stored === "light" || stored === "dark"
+          ? stored
+          : window.matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark";
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (e) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+
+
+
+
+
+
+
+<link
+  rel="stylesheet"
+  href="/css/site.min.ea6a6eb8914e1ae3e5dc2c0d190db389ebfd8ed0e7822f1b03f5a13127153f62.css"
+  integrity="sha256-6mpuuJFOGuPl3CwNGQ2ziev9jtDngi8bA/WhMScVP2I="
+  crossorigin="anonymous"
+/>
+<link rel="stylesheet" href="/css/view-transition.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="topbar" role="banner">
+  <a class="brand" href="/" aria-label="Oh My Computer Science — home">
+    <svg
+  class="brand__mark"
+  viewBox="0 0 32 32"
+  fill="none"
+  aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <rect x="1" y="1" width="30" height="30" rx="7" fill="var(--bg-sel)" stroke="var(--border-strong)" stroke-width="1"/>
+  <circle cx="11" cy="16" r="3" fill="var(--green)"/>
+  <circle cx="21" cy="9" r="3" fill="var(--magenta)"/>
+  <circle cx="21" cy="23" r="3" fill="var(--blue)"/>
+  <line x1="11" y1="16" x2="21" y2="9" stroke="var(--comment)" stroke-width="1.6"/>
+  <line x1="11" y1="16" x2="21" y2="23" stroke="var(--comment)" stroke-width="1.6"/>
+</svg>
+
+    <span class="brand__word">Oh My <em>Computer Science</em></span>
+  </a>
+
+  <button
+    class="hamburger"
+    id="menu-toggle"
+    type="button"
+    aria-label="Toggle navigation"
+    aria-controls="sidebar"
+    aria-expanded="false"
+  >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+
+  <div class="topbar__search" role="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <circle cx="11" cy="11" r="7"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input
+      type="search"
+      id="search"
+      role="combobox"
+      aria-autocomplete="list"
+      placeholder="Search the guide…"
+      aria-label="Search"
+      aria-controls="search-results"
+      aria-expanded="false"
+      autocomplete="off"
+    />
+    <div class="search-results" id="search-results" role="listbox" aria-label="Search results" hidden></div>
+  </div>
+
+  <div class="topbar__actions">
+    <button
+      class="iconbtn"
+      id="theme-toggle"
+      type="button"
+      aria-label="Toggle dark / light theme"
+      title="Toggle theme"
+      aria-pressed="false"
+    >
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+
+    <a
+      class="iconbtn"
+      href="https://github.com/zotaion/ohmycs"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Repository on GitHub"
+      title="Repository"
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.4-1.27.73-1.56-2.56-.29-5.26-1.28-5.26-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.04 11.04 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"></path>
+      </svg>
+    </a>
+  </div>
+</header>
+
+
+    
+      <div class="layout">
+        
+          <aside class="sidebar" id="sidebar">
+<nav aria-label="Chapters">
+  <a class="sidebar__home" href="/">
+    Oh My Computer Science
+  </a>
+
+  
+  
+
+  
+    <div class="sidebar__heading">Chapters</div>
+    <ul>
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/01-supervised-learning/"
+    class=""
+    
+  >
+    
+      <span class="num">01</span>
+    
+    <span>Supervised Learning: Regression &amp; Classification</span>
+  </a>
+
+  
+
+  
+    <ul class="sidebar__algos">
+      
+        <li>
+          <a
+            href="/docs/01-supervised-learning/gradient-boosted-trees/"
+            class=""
+            
+          >
+            <span class="num">#1</span>
+            <span class="sidebar__algo-name">Gradient Boosted Trees: XGBoost, LightGBM, CatBoost, GBM</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/01-supervised-learning/random-forest/"
+            class=""
+            
+          >
+            <span class="num">#2</span>
+            <span class="sidebar__algo-name">Random Forest</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/01-supervised-learning/logistic-regression/"
+            class=""
+            
+          >
+            <span class="num">#3</span>
+            <span class="sidebar__algo-name">Logistic Regression</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/01-supervised-learning/linear-regression-ridge-lasso-elastic-net/"
+            class=""
+            
+          >
+            <span class="num">#4</span>
+            <span class="sidebar__algo-name">Linear Regression / Ridge / Lasso / Elastic Net</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/01-supervised-learning/decision-tree/"
+            class=""
+            
+          >
+            <span class="num">#5</span>
+            <span class="sidebar__algo-name">Decision Tree</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/01-supervised-learning/support-vector-machine-svr/"
+            class=""
+            
+          >
+            <span class="num">#6</span>
+            <span class="sidebar__algo-name">Support Vector Machine / SVR</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/01-supervised-learning/k-nearest-neighbors/"
+            class=""
+            
+          >
+            <span class="num">#7</span>
+            <span class="sidebar__algo-name">k-Nearest Neighbors</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/01-supervised-learning/naive-bayes/"
+            class=""
+            
+          >
+            <span class="num">#8</span>
+            <span class="sidebar__algo-name">Naive Bayes</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/01-supervised-learning/generalized-linear-models/"
+            class=""
+            
+          >
+            <span class="num">#9</span>
+            <span class="sidebar__algo-name">Generalized Linear Models</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/01-supervised-learning/neural-networks-mlps/"
+            class=""
+            
+          >
+            <span class="num">#10</span>
+            <span class="sidebar__algo-name">Neural Networks / MLPs</span>
+          </a>
+        </li>
+      
+    </ul>
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/02-deep-learning/"
+    class=""
+    
+  >
+    
+      <span class="num">02</span>
+    
+    <span>Deep Learning</span>
+  </a>
+
+  
+
+  
+    <ul class="sidebar__algos">
+      
+        <li>
+          <a
+            href="/docs/02-deep-learning/transformers/"
+            class=""
+            
+          >
+            <span class="num">#1</span>
+            <span class="sidebar__algo-name">Transformers</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/02-deep-learning/convolutional-neural-networks/"
+            class=""
+            
+          >
+            <span class="num">#2</span>
+            <span class="sidebar__algo-name">Convolutional Neural Networks</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/02-deep-learning/recurrent-neural-networks-lstm-gru/"
+            class=""
+            
+          >
+            <span class="num">#3</span>
+            <span class="sidebar__algo-name">Recurrent Neural Networks / LSTM / GRU</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/02-deep-learning/autoencoders/"
+            class=""
+            
+          >
+            <span class="num">#4</span>
+            <span class="sidebar__algo-name">Autoencoders</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/02-deep-learning/diffusion-models/"
+            class=""
+            
+          >
+            <span class="num">#5</span>
+            <span class="sidebar__algo-name">Diffusion Models</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/02-deep-learning/graph-neural-networks/"
+            class=""
+            
+          >
+            <span class="num">#6</span>
+            <span class="sidebar__algo-name">Graph Neural Networks</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/02-deep-learning/siamese-contrastive-networks/"
+            class=""
+            
+          >
+            <span class="num">#7</span>
+            <span class="sidebar__algo-name">Siamese / Contrastive Networks</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/02-deep-learning/neural-collaborative-filtering/"
+            class=""
+            
+          >
+            <span class="num">#8</span>
+            <span class="sidebar__algo-name">Neural Collaborative Filtering</span>
+          </a>
+        </li>
+      
+    </ul>
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/03-unsupervised-clustering/"
+    class=""
+    
+  >
+    
+      <span class="num">03</span>
+    
+    <span>Unsupervised Learning: Clustering</span>
+  </a>
+
+  
+
+  
+    <ul class="sidebar__algos">
+      
+        <li>
+          <a
+            href="/docs/03-unsupervised-clustering/k-means/"
+            class=""
+            
+          >
+            <span class="num">#1</span>
+            <span class="sidebar__algo-name">k-Means</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/03-unsupervised-clustering/hierarchical-clustering/"
+            class=""
+            
+          >
+            <span class="num">#2</span>
+            <span class="sidebar__algo-name">Hierarchical Clustering</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/03-unsupervised-clustering/dbscan-hdbscan/"
+            class=""
+            
+          >
+            <span class="num">#3</span>
+            <span class="sidebar__algo-name">DBSCAN / HDBSCAN</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/03-unsupervised-clustering/gaussian-mixture-models/"
+            class=""
+            
+          >
+            <span class="num">#4</span>
+            <span class="sidebar__algo-name">Gaussian Mixture Models</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/03-unsupervised-clustering/spectral-clustering/"
+            class=""
+            
+          >
+            <span class="num">#5</span>
+            <span class="sidebar__algo-name">Spectral Clustering</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/03-unsupervised-clustering/mean-shift/"
+            class=""
+            
+          >
+            <span class="num">#6</span>
+            <span class="sidebar__algo-name">Mean Shift</span>
+          </a>
+        </li>
+      
+    </ul>
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/04-dimensionality-reduction/"
+    class=""
+    
+  >
+    
+      <span class="num">04</span>
+    
+    <span>Dimensionality Reduction &amp; Representation Learning</span>
+  </a>
+
+  
+
+  
+    <ul class="sidebar__algos">
+      
+        <li>
+          <a
+            href="/docs/04-dimensionality-reduction/pca/"
+            class=""
+            
+          >
+            <span class="num">#1</span>
+            <span class="sidebar__algo-name">PCA</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/04-dimensionality-reduction/t-sne/"
+            class=""
+            
+          >
+            <span class="num">#2</span>
+            <span class="sidebar__algo-name">t-SNE</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/04-dimensionality-reduction/umap/"
+            class=""
+            
+          >
+            <span class="num">#3</span>
+            <span class="sidebar__algo-name">UMAP</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/04-dimensionality-reduction/lda/"
+            class=""
+            
+          >
+            <span class="num">#4</span>
+            <span class="sidebar__algo-name">LDA: Linear Discriminant Analysis</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/04-dimensionality-reduction/nmf/"
+            class=""
+            
+          >
+            <span class="num">#5</span>
+            <span class="sidebar__algo-name">NMF: Non-negative Matrix Factorization</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/04-dimensionality-reduction/autoencoders/"
+            class=""
+            
+          >
+            <span class="num">#6</span>
+            <span class="sidebar__algo-name">Autoencoders</span>
+          </a>
+        </li>
+      
+    </ul>
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/05-recommender-systems/"
+    class=""
+    
+  >
+    
+      <span class="num">05</span>
+    
+    <span>Recommender-System Algorithms</span>
+  </a>
+
+  
+
+  
+    <ul class="sidebar__algos">
+      
+        <li>
+          <a
+            href="/docs/05-recommender-systems/collaborative-filtering/"
+            class=""
+            
+          >
+            <span class="num">#1</span>
+            <span class="sidebar__algo-name">Collaborative Filtering</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/05-recommender-systems/matrix-factorization-svd-als/"
+            class=""
+            
+          >
+            <span class="num">#2</span>
+            <span class="sidebar__algo-name">Matrix Factorization / SVD / ALS</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/05-recommender-systems/content-based-filtering/"
+            class=""
+            
+          >
+            <span class="num">#3</span>
+            <span class="sidebar__algo-name">Content-Based Filtering</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/05-recommender-systems/hybrid-recommenders/"
+            class=""
+            
+          >
+            <span class="num">#4</span>
+            <span class="sidebar__algo-name">Hybrid Recommenders</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/05-recommender-systems/learning-to-rank/"
+            class=""
+            
+          >
+            <span class="num">#5</span>
+            <span class="sidebar__algo-name">Learning-to-Rank</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/05-recommender-systems/deep-recommenders-two-tower-models/"
+            class=""
+            
+          >
+            <span class="num">#6</span>
+            <span class="sidebar__algo-name">Deep Recommenders / Two-Tower Models</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/05-recommender-systems/bandit-algorithms/"
+            class=""
+            
+          >
+            <span class="num">#7</span>
+            <span class="sidebar__algo-name">Bandit Algorithms</span>
+          </a>
+        </li>
+      
+    </ul>
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/06-anomaly-detection/"
+    class="active"
+    aria-current="page"
+  >
+    
+      <span class="num">06</span>
+    
+    <span>Anomaly Detection</span>
+  </a>
+
+  
+
+  
+    <ul class="sidebar__algos">
+      
+        <li>
+          <a
+            href="/docs/06-anomaly-detection/isolation-forest/"
+            class=""
+            
+          >
+            <span class="num">#1</span>
+            <span class="sidebar__algo-name">Isolation Forest</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/06-anomaly-detection/one-class-svm/"
+            class=""
+            
+          >
+            <span class="num">#2</span>
+            <span class="sidebar__algo-name">One-Class SVM</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/06-anomaly-detection/local-outlier-factor/"
+            class=""
+            
+          >
+            <span class="num">#3</span>
+            <span class="sidebar__algo-name">Local Outlier Factor</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/06-anomaly-detection/autoencoders/"
+            class=""
+            
+          >
+            <span class="num">#4</span>
+            <span class="sidebar__algo-name">Autoencoders</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/06-anomaly-detection/gaussian-statistical-threshold-models/"
+            class=""
+            
+          >
+            <span class="num">#5</span>
+            <span class="sidebar__algo-name">Gaussian / Statistical Threshold Models</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/06-anomaly-detection/robust-covariance-elliptic-envelope/"
+            class=""
+            
+          >
+            <span class="num">#6</span>
+            <span class="sidebar__algo-name">Robust Covariance / Elliptic Envelope</span>
+          </a>
+        </li>
+      
+    </ul>
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/07-time-series-forecasting/"
+    class=""
+    
+  >
+    
+      <span class="num">07</span>
+    
+    <span>Time-Series Forecasting</span>
+  </a>
+
+  
+
+  
+    <ul class="sidebar__algos">
+      
+        <li>
+          <a
+            href="/docs/07-time-series-forecasting/arima-sarima/"
+            class=""
+            
+          >
+            <span class="num">#1</span>
+            <span class="sidebar__algo-name">ARIMA / SARIMA</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/07-time-series-forecasting/exponential-smoothing-ets-holt-winters/"
+            class=""
+            
+          >
+            <span class="num">#2</span>
+            <span class="sidebar__algo-name">Exponential Smoothing / ETS / Holt-Winters</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/07-time-series-forecasting/prophet-style-additive-models/"
+            class=""
+            
+          >
+            <span class="num">#3</span>
+            <span class="sidebar__algo-name">Prophet-style additive models</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/07-time-series-forecasting/gradient-boosting-for-time-series/"
+            class=""
+            
+          >
+            <span class="num">#4</span>
+            <span class="sidebar__algo-name">Gradient Boosting for Time Series</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/07-time-series-forecasting/lstm-gru/"
+            class=""
+            
+          >
+            <span class="num">#5</span>
+            <span class="sidebar__algo-name">LSTM / GRU</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/07-time-series-forecasting/temporal-cnn-tcn/"
+            class=""
+            
+          >
+            <span class="num">#6</span>
+            <span class="sidebar__algo-name">Temporal CNN / TCN</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/07-time-series-forecasting/transformer-forecasting-models/"
+            class=""
+            
+          >
+            <span class="num">#7</span>
+            <span class="sidebar__algo-name">Transformer Forecasting Models</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/07-time-series-forecasting/state-space-models-kalman-filter/"
+            class=""
+            
+          >
+            <span class="num">#8</span>
+            <span class="sidebar__algo-name">State Space Models / Kalman Filter</span>
+          </a>
+        </li>
+      
+    </ul>
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/08-reinforcement-learning/"
+    class=""
+    
+  >
+    
+      <span class="num">08</span>
+    
+    <span>Reinforcement Learning</span>
+  </a>
+
+  
+
+  
+    <ul class="sidebar__algos">
+      
+        <li>
+          <a
+            href="/docs/08-reinforcement-learning/q-learning-deep-q-networks/"
+            class=""
+            
+          >
+            <span class="num">#1</span>
+            <span class="sidebar__algo-name">Q-Learning / Deep Q-Networks</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/08-reinforcement-learning/policy-gradient-methods/"
+            class=""
+            
+          >
+            <span class="num">#2</span>
+            <span class="sidebar__algo-name">Policy Gradient Methods</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/08-reinforcement-learning/actor-critic-methods/"
+            class=""
+            
+          >
+            <span class="num">#3</span>
+            <span class="sidebar__algo-name">Actor-Critic Methods</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/08-reinforcement-learning/ppo/"
+            class=""
+            
+          >
+            <span class="num">#4</span>
+            <span class="sidebar__algo-name">PPO: Proximal Policy Optimization</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/08-reinforcement-learning/a3c-a2c/"
+            class=""
+            
+          >
+            <span class="num">#5</span>
+            <span class="sidebar__algo-name">A3C / A2C</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/08-reinforcement-learning/ddpg-td3-sac/"
+            class=""
+            
+          >
+            <span class="num">#6</span>
+            <span class="sidebar__algo-name">DDPG / TD3 / SAC</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/08-reinforcement-learning/multi-armed-bandits/"
+            class=""
+            
+          >
+            <span class="num">#7</span>
+            <span class="sidebar__algo-name">Multi-Armed Bandits</span>
+          </a>
+        </li>
+      
+    </ul>
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/09-nlp-text-mining/"
+    class=""
+    
+  >
+    
+      <span class="num">09</span>
+    
+    <span>NLP &amp; Text Mining</span>
+  </a>
+
+  
+
+  
+    <ul class="sidebar__algos">
+      
+        <li>
+          <a
+            href="/docs/09-nlp-text-mining/transformer-models-llms/"
+            class=""
+            
+          >
+            <span class="num">#1</span>
+            <span class="sidebar__algo-name">Transformer Models / LLMs</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/09-nlp-text-mining/embeddings-vector-search/"
+            class=""
+            
+          >
+            <span class="num">#2</span>
+            <span class="sidebar__algo-name">Embeddings &#43; Vector Search</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/09-nlp-text-mining/tf-idf-linear-models/"
+            class=""
+            
+          >
+            <span class="num">#3</span>
+            <span class="sidebar__algo-name">TF-IDF &#43; Linear Models</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/09-nlp-text-mining/naive-bayes/"
+            class=""
+            
+          >
+            <span class="num">#4</span>
+            <span class="sidebar__algo-name">Naive Bayes</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/09-nlp-text-mining/topic-modeling/"
+            class=""
+            
+          >
+            <span class="num">#5</span>
+            <span class="sidebar__algo-name">Topic Modeling: LDA, NMF</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/09-nlp-text-mining/crf-hmm/"
+            class=""
+            
+          >
+            <span class="num">#6</span>
+            <span class="sidebar__algo-name">CRF / HMM</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/09-nlp-text-mining/word2vec-glove-fasttext/"
+            class=""
+            
+          >
+            <span class="num">#7</span>
+            <span class="sidebar__algo-name">Word2Vec / GloVe / FastText</span>
+          </a>
+        </li>
+      
+    </ul>
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/10-computer-vision/"
+    class=""
+    
+  >
+    
+      <span class="num">10</span>
+    
+    <span>Computer Vision</span>
+  </a>
+
+  
+
+  
+    <ul class="sidebar__algos">
+      
+        <li>
+          <a
+            href="/docs/10-computer-vision/cnns/"
+            class=""
+            
+          >
+            <span class="num">#1</span>
+            <span class="sidebar__algo-name">CNNs</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/10-computer-vision/vision-transformers/"
+            class=""
+            
+          >
+            <span class="num">#2</span>
+            <span class="sidebar__algo-name">Vision Transformers</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/10-computer-vision/yolo-style-detectors/"
+            class=""
+            
+          >
+            <span class="num">#3</span>
+            <span class="sidebar__algo-name">YOLO-style Detectors</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/10-computer-vision/r-cnn-faster-r-cnn-mask-r-cnn/"
+            class=""
+            
+          >
+            <span class="num">#4</span>
+            <span class="sidebar__algo-name">R-CNN / Faster R-CNN / Mask R-CNN</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/10-computer-vision/u-net/"
+            class=""
+            
+          >
+            <span class="num">#5</span>
+            <span class="sidebar__algo-name">U-Net</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/10-computer-vision/diffusion-models/"
+            class=""
+            
+          >
+            <span class="num">#6</span>
+            <span class="sidebar__algo-name">Diffusion Models</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/10-computer-vision/classical-cv-ml/"
+            class=""
+            
+          >
+            <span class="num">#7</span>
+            <span class="sidebar__algo-name">Classical CV &#43; ML: SIFT, HOG, SVM</span>
+          </a>
+        </li>
+      
+    </ul>
+  
+</li>
+
+      
+        
+
+
+
+<li>
+  <a
+    href="/docs/11-graph-network-ml/"
+    class=""
+    
+  >
+    
+      <span class="num">11</span>
+    
+    <span>Graph &amp; Network ML</span>
+  </a>
+
+  
+
+  
+    <ul class="sidebar__algos">
+      
+        <li>
+          <a
+            href="/docs/11-graph-network-ml/pagerank/"
+            class=""
+            
+          >
+            <span class="num">#1</span>
+            <span class="sidebar__algo-name">PageRank</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/11-graph-network-ml/community-detection/"
+            class=""
+            
+          >
+            <span class="num">#2</span>
+            <span class="sidebar__algo-name">Community Detection: Louvain, Leiden</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/11-graph-network-ml/node2vec-deepwalk/"
+            class=""
+            
+          >
+            <span class="num">#3</span>
+            <span class="sidebar__algo-name">Node2Vec / DeepWalk</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/11-graph-network-ml/graph-neural-networks/"
+            class=""
+            
+          >
+            <span class="num">#4</span>
+            <span class="sidebar__algo-name">Graph Neural Networks</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/11-graph-network-ml/graphsage-gcn-gat/"
+            class=""
+            
+          >
+            <span class="num">#5</span>
+            <span class="sidebar__algo-name">GraphSAGE / GCN / GAT</span>
+          </a>
+        </li>
+      
+        <li>
+          <a
+            href="/docs/11-graph-network-ml/link-prediction-models/"
+            class=""
+            
+          >
+            <span class="num">#6</span>
+            <span class="sidebar__algo-name">Link Prediction Models</span>
+          </a>
+        </li>
+      
+    </ul>
+  
+</li>
+
+      
+    </ul>
+
+    
+  
+</nav>
+</aside>
+        
+        <main class="content" id="main-content">
+          <div class="content__inner" data-pagefind-body>
+            
+  
+    
+<article class="prose">
+  <div class="chapter-meta">
+    <span class="num">06</span>
+    <span>Chapter</span>
+  </div>
+
+  <h1>Anomaly Detection</h1>
+
+  <p class="chapter-summary">Flag rare, suspicious, or faulty observations that deviate from the norm.</p>
+
+  <p>Anomaly detection flags the rare, suspicious, or faulty observations that deviate from expected patterns. The methods below range from tree-based and density approaches to statistical thresholds and neural detectors for complex high-dimensional data.</p>
+
+
+  
+
+  <div class="callout callout--default">
+    <ul>
+      <li>Use Isolation Forest as a strong general-purpose baseline.</li><li>Use statistical thresholds for simple monitoring; autoencoders for high-dimensional data.</li>
+    </ul>
+  </div>
+
+
+
+
+
+  <div class="algo-table-wrap" id="algorithms">
+    <table class="algo-table">
+      <thead>
+        <tr>
+          <th class="col-rank" scope="col">#</th>
+          <th class="col-algo" scope="col">Algorithm</th>
+          <th class="col-best" scope="col">Best for</th>
+          <th class="col-fields" scope="col">Common fields</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+          
+          
+          
+          
+          
+          <tr data-rank="1" data-href="/docs/06-anomaly-detection/isolation-forest/">
+            <td class="cell-rank" data-label="Rank">
+              <span class="rank rank-1">1</span>
+            </td>
+            <td class="cell-algo" data-label="Algorithm">
+              <a class="algo-link" href="/docs/06-anomaly-detection/isolation-forest/">
+                <span class="algo-link__name">Isolation Forest</span>
+                <span class="algo-link__arrow" aria-hidden="true">→</span>
+              </a>
+            </td>
+            <td class="cell-best" data-label="Best for">General anomaly detection</td>
+            <td class="cell-fields" data-label="Fields">
+              
+                <ul class="chips">
+                  <li>Fraud</li><li>cybersecurity</li><li>operations</li><li>IoT</li>
+                </ul>
+              
+            </td>
+          </tr>
+        
+          
+          
+          
+          
+          
+          <tr data-rank="2" data-href="/docs/06-anomaly-detection/one-class-svm/">
+            <td class="cell-rank" data-label="Rank">
+              <span class="rank rank-2">2</span>
+            </td>
+            <td class="cell-algo" data-label="Algorithm">
+              <a class="algo-link" href="/docs/06-anomaly-detection/one-class-svm/">
+                <span class="algo-link__name">One-Class SVM</span>
+                <span class="algo-link__arrow" aria-hidden="true">→</span>
+              </a>
+            </td>
+            <td class="cell-best" data-label="Best for">Novelty detection on smaller datasets</td>
+            <td class="cell-fields" data-label="Fields">
+              
+                <ul class="chips">
+                  <li>Manufacturing</li><li>security</li><li>quality control</li>
+                </ul>
+              
+            </td>
+          </tr>
+        
+          
+          
+          
+          
+          
+          <tr data-rank="3" data-href="/docs/06-anomaly-detection/local-outlier-factor/">
+            <td class="cell-rank" data-label="Rank">
+              <span class="rank rank-3">3</span>
+            </td>
+            <td class="cell-algo" data-label="Algorithm">
+              <a class="algo-link" href="/docs/06-anomaly-detection/local-outlier-factor/">
+                <span class="algo-link__name">Local Outlier Factor</span>
+                <span class="algo-link__arrow" aria-hidden="true">→</span>
+              </a>
+            </td>
+            <td class="cell-best" data-label="Best for">Density-based outliers</td>
+            <td class="cell-fields" data-label="Fields">
+              
+                <ul class="chips">
+                  <li>Sensor data</li><li>geospatial data</li><li>fraud</li>
+                </ul>
+              
+            </td>
+          </tr>
+        
+          
+          
+          
+          
+          
+          <tr data-rank="4" data-href="/docs/06-anomaly-detection/autoencoders/">
+            <td class="cell-rank" data-label="Rank">
+              <span class="rank rank-n">4</span>
+            </td>
+            <td class="cell-algo" data-label="Algorithm">
+              <a class="algo-link" href="/docs/06-anomaly-detection/autoencoders/">
+                <span class="algo-link__name">Autoencoders</span>
+                <span class="algo-link__arrow" aria-hidden="true">→</span>
+              </a>
+            </td>
+            <td class="cell-best" data-label="Best for">Complex high-dimensional anomalies</td>
+            <td class="cell-fields" data-label="Fields">
+              
+                <ul class="chips">
+                  <li>Images</li><li>network traffic</li><li>medical scans</li>
+                </ul>
+              
+            </td>
+          </tr>
+        
+          
+          
+          
+          
+          
+          <tr data-rank="5" data-href="/docs/06-anomaly-detection/gaussian-statistical-threshold-models/">
+            <td class="cell-rank" data-label="Rank">
+              <span class="rank rank-n">5</span>
+            </td>
+            <td class="cell-algo" data-label="Algorithm">
+              <a class="algo-link" href="/docs/06-anomaly-detection/gaussian-statistical-threshold-models/">
+                <span class="algo-link__name">Gaussian / Statistical Threshold Models</span>
+                <span class="algo-link__arrow" aria-hidden="true">→</span>
+              </a>
+            </td>
+            <td class="cell-best" data-label="Best for">Simple monitoring</td>
+            <td class="cell-fields" data-label="Fields">
+              
+                <ul class="chips">
+                  <li>DevOps</li><li>finance</li><li>process control</li>
+                </ul>
+              
+            </td>
+          </tr>
+        
+          
+          
+          
+          
+          
+          <tr data-rank="6" data-href="/docs/06-anomaly-detection/robust-covariance-elliptic-envelope/">
+            <td class="cell-rank" data-label="Rank">
+              <span class="rank rank-n">6</span>
+            </td>
+            <td class="cell-algo" data-label="Algorithm">
+              <a class="algo-link" href="/docs/06-anomaly-detection/robust-covariance-elliptic-envelope/">
+                <span class="algo-link__name">Robust Covariance / Elliptic Envelope</span>
+                <span class="algo-link__arrow" aria-hidden="true">→</span>
+              </a>
+            </td>
+            <td class="cell-best" data-label="Best for">Gaussian-like data</td>
+            <td class="cell-fields" data-label="Fields">
+              
+                <ul class="chips">
+                  <li>Risk modeling</li><li>industrial monitoring</li>
+                </ul>
+              
+            </td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+
+</article>
+
+
+
+
+
+
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <nav class="pager" aria-label="Pagination">
+    
+      
+      <a class="pager__link pager__link--prev" href="/docs/05-recommender-systems/">
+        <span class="pager__dir">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          Previous
+        </span>
+        <span class="pager__title">Recommender-System Algorithms</span>
+      </a>
+    
+
+    
+      
+      <a class="pager__link pager__link--next" href="/docs/07-time-series-forecasting/">
+        <span class="pager__dir">
+          Next
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </span>
+        <span class="pager__title">Time-Series Forecasting</span>
+      </a>
+    
+  </nav>
+
+
+
+  
+
+          </div>
+        </main>
+        
+          <aside class="toc">
+
+  <div class="toc__title">In this chapter</div>
+  <nav class="toc__chapter">
+    <ul>
+      
+        <li>
+          <a href="/docs/06-anomaly-detection/isolation-forest/">
+            <span class="toc__num">#1</span>
+            <span class="toc__name">Isolation Forest</span>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/docs/06-anomaly-detection/one-class-svm/">
+            <span class="toc__num">#2</span>
+            <span class="toc__name">One-Class SVM</span>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/docs/06-anomaly-detection/local-outlier-factor/">
+            <span class="toc__num">#3</span>
+            <span class="toc__name">Local Outlier Factor</span>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/docs/06-anomaly-detection/autoencoders/">
+            <span class="toc__num">#4</span>
+            <span class="toc__name">Autoencoders</span>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/docs/06-anomaly-detection/gaussian-statistical-threshold-models/">
+            <span class="toc__num">#5</span>
+            <span class="toc__name">Gaussian / Statistical Threshold Models</span>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/docs/06-anomaly-detection/robust-covariance-elliptic-envelope/">
+            <span class="toc__num">#6</span>
+            <span class="toc__name">Robust Covariance / Elliptic Envelope</span>
+          </a>
+        </li>
+      
+    </ul>
+  </nav>
+
+</aside>
+        
+      </div>
+    
+
+    <div class="backdrop" aria-hidden="true"></div>
+
+    
+<footer class="site-footer" role="contentinfo">
+  <div>
+    Built with <a href="https://gohugo.io" rel="noopener">Hugo</a> ·
+    <a href="https://github.com/savq/melange-nvim" rel="noopener">Melange</a> palette
+  </div>
+  <div>
+    © 2026 Oh My Computer Science
+    
+      · <a href="https://github.com/zotaion/ohmycs" rel="noopener">Source</a>
+    
+  </div>
+</footer>
+
+
+    
+    
+      <script src="/js/theme.min.04b9275e3737306705d13f2143c2bff09d701db73e562e5a253541041057a985.js" integrity="sha256-BLknXjc3MGcF0T8hQ8K/8J1wHbc&#43;Vi5aJTVBBBBXqYU=" crossorigin="anonymous" defer></script>
+    
+
+    
+    
+      <script src="/js/search.min.0ca1bbcb5c6730994770095b258829bb6fbe7df89eadffe82147ed691d29903a.js" integrity="sha256-DKG7y1xnMJlHcAlbJYgpu2&#43;&#43;ffierf/oIUftaR0pkDo=" crossorigin="anonymous" defer></script>
+    
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+            crossorigin="anonymous"
+            onload="renderMathInElement(document.body, {delimiters:[{left:&quot;$$&quot;,right:&quot;$$&quot;,display:true},{left:&quot;$&quot;,right:&quot;$&quot;,display:false},{left:&quot;\\(&quot;,right:&quot;\\)&quot;,display:false},{left:&quot;\\[&quot;,right:&quot;\\]&quot;,display:true}],throwOnError:false});"></script>
+  </body>
+</html>
