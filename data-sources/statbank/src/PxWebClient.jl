@@ -11,6 +11,8 @@ const USER_AGENT = "ohmycs-statbank-fetcher/0.1 (manual; research)"
 
 # Output dir = project's served data folder (committed; served at /data/statbank/).
 const OUTDIR = normpath(joinpath(@__DIR__, "..", "..", "..", "static", "data", "statbank"))
+# Internal provenance dir (NOT served) — keeps detailed source out of the public site.
+const PROVDIR = normpath(joinpath(@__DIR__, "..", "provenance"))
 
 # tiny manual percent-encoder for a single URL path segment (RFC 3986 unreserved set).
 # replaces HTTP.URIs.escapeuri so the HTTP.jl dep can be dropped entirely.
@@ -284,6 +286,7 @@ end
 
 function tidy_and_write!(df, name::AbstractString; source_url::AbstractString, query)
     mkpath(OUTDIR)
+    mkpath(PROVDIR)
     CSV.write(joinpath(OUTDIR, "$(name).csv"), df)
     meta = Dict(
         "source" => source_url,
@@ -292,13 +295,13 @@ function tidy_and_write!(df, name::AbstractString; source_url::AbstractString, q
         "n_rows" => nrow(df),
         "columns" => names(df),
     )
-    open(joinpath(OUTDIR, "$(name).meta.json"), "w") do io
+    open(joinpath(PROVDIR, "$(name).meta.json"), "w") do io
         write(io, JSON3.write(meta))
     end
     return df
 end
 
-export BASE, OUTDIR, table_url, list_folder, get_meta, post_data,
+export BASE, OUTDIR, PROVDIR, table_url, list_folder, get_meta, post_data,
        long_dataframe, long_dataframe_from_json, tidy_and_write!
 
 end
