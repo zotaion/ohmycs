@@ -15,6 +15,7 @@ html {
   -moz-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-behavior: smooth;
+  background-color: var(--bg);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -519,3 +520,4 @@ html[data-theme="dark"] .iconbtn .i-moon {
     display: none;
   }
 }
+

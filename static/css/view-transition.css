@@ -1,0 +1,16 @@
+/* view-transition.css — served un-minified (Hugo's CSS minifier strips the
+   modern @view-transition at-rule, so it must live outside the minified bundle).
+
+   L2: cross-document View Transitions — same-origin navigations crossfade
+       instead of flashing white. Chromium (Chrome/Edge 126+); other browsers
+       ignore this and fall back to the themed <html> background (L1). */
+@view-transition {
+  navigation: same-origin;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
